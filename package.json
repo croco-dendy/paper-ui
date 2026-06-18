@@ -21,7 +21,8 @@
       "types": "./src/styles/index.ts",
       "import": "./src/styles/index.ts",
       "require": "./src/styles/index.ts"
-    }
+    },
+    "./dist/index.css": "./dist/index.css"
   },
   "files": [
     "dist",
