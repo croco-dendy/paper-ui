@@ -1,6 +1,7 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { ReactNode } from 'react';
+import { useEscapeKey } from '../../hooks/use-escape-key';
 import { layoutConfig } from '../../layout';
 import { space } from '../../tokens';
 import { buttonSizeCompact, cn } from '../../utils/style-helpers';
@@ -80,14 +81,7 @@ export function Layout({
   const [mobileOpen, setMobileOpen] = useState(false);
   const shouldReduceMotion = useReducedMotion();
 
-  useEffect(() => {
-    if (!mobileOpen) return;
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setMobileOpen(false);
-    };
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [mobileOpen]);
+  useEscapeKey(mobileOpen, () => setMobileOpen(false));
 
   const bgStyles = getBackgroundStyles(background);
   const hasSidebar = showSidebar && navigationItems.length > 0;

@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef } from 'react';
 import type { ReactNode } from 'react';
 import { createPortal } from 'react-dom';
+import { useEscapeKey } from '../../hooks/use-escape-key';
 import { CloseIcon } from '../../utils/icons';
 import { cn } from '../../utils/style-helpers';
 import { type TextureProp, resolveTexture } from '../../utils/textures';
@@ -33,8 +34,8 @@ export function Modal({
   const titleId = useId();
   const panelRef = useRef<HTMLDivElement>(null);
   const previouslyFocused = useRef<HTMLElement | null>(null);
-  const onCloseRef = useRef(onClose);
-  onCloseRef.current = onClose;
+
+  useEscapeKey(open, onClose);
 
   useEffect(() => {
     if (!open) return;
@@ -43,11 +44,6 @@ export function Modal({
     panelRef.current?.focus();
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        onCloseRef.current();
-        return;
-      }
-
       if (event.key !== 'Tab') return;
 
       const focusables = panelRef.current?.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
