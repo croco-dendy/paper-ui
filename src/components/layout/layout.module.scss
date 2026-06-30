@@ -40,7 +40,7 @@
 
 .headerTitle {
   font-family: var(--paper-font-default, $font-family-serif);
-  font-size: $font-size-md;
+  font-size: $font-size-lg;
   font-weight: $font-weight-semibold;
   color: $color-text-primary;
   margin: 0;
@@ -50,7 +50,7 @@
 
 .headerSubtitle {
   font-family: var(--paper-font-default, $font-family-serif);
-  font-size: $font-size-sm;
+  font-size: $font-size-base;
   font-weight: $font-weight-normal;
   color: $color-text-tertiary;
   margin: 0;

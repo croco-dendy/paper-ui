@@ -32,7 +32,7 @@
   position: relative;
   z-index: 1;
   padding: $space-8;
-  font-size: $font-size-base;
+  font-size: $font-size-md;
   line-height: $line-height-grid;
 
   > * + * {
@@ -43,7 +43,7 @@
 .small {
   .textureLayer {
     padding: $space-3 $space-4;
-    font-size: $font-size-sm;
+    font-size: $font-size-base;
     line-height: $line-height-tight;
 
     > * + * {

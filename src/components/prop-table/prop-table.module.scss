@@ -6,7 +6,7 @@
 
 .codeName {
   font-family: $font-family-mono;
-  font-size: $font-size-xs;
+  font-size: $font-size-sm;
   color: $color-accent-blue-dark;
 }
 
@@ -18,7 +18,7 @@
 .desc {
   font-family: var(--paper-font-default, $font-family-serif);
   color: $color-text-secondary;
-  font-size: $font-size-sm;
+  font-size: $font-size-base;
   line-height: $line-height-normal;
   display: block;
 }

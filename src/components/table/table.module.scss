@@ -50,7 +50,7 @@
   padding: $space-2 $space-3 $space-2 $space-8;
   color: $color-text-primary;
   font-family: var(--paper-font-default, $font-family-serif);
-  font-size: $font-size-sm;
+  font-size: $font-size-base;
   font-weight: $font-weight-medium;
   line-height: $line-height-tight;
 
@@ -64,7 +64,7 @@
     color: $color-text-tertiary;
     font-weight: $font-weight-normal;
     font-family: $font-family-handwritten;
-    font-size: $font-size-base;
+    font-size: $font-size-md;
   }
 
   &:focus {
@@ -92,7 +92,7 @@
   table-layout: fixed;
   border-collapse: collapse;
   font-family: var(--paper-font-default, $font-family-serif);
-  font-size: $font-size-sm;
+  font-size: $font-size-base;
   color: $color-text-primary;
 }
 
@@ -171,7 +171,7 @@
     background-size: 200px 200px;
     color: $color-text-primary;
     font-family: $font-family-handwritten;
-    font-size: $font-size-base;
+    font-size: $font-size-md;
     line-height: $line-height-normal;
     border-bottom: 1px solid $color-border-default;
   }
@@ -222,7 +222,7 @@
 .boardColumnLabel {
   font-family: var(--paper-font-default, $font-family-serif);
   font-weight: $font-weight-bold;
-  font-size: $font-size-sm;
+  font-size: $font-size-base;
   letter-spacing: $letter-spacing-wide;
   text-transform: uppercase;
   color: $color-text-primary;
@@ -239,7 +239,7 @@
   background-color: $color-bg-surface;
   border: 1px solid $color-border-default;
   font-family: var(--paper-font-default, $font-family-serif);
-  font-size: $font-size-xs;
+  font-size: $font-size-sm;
   color: $color-text-secondary;
 }
 
@@ -263,7 +263,7 @@
   padding: $space-4 $space-6;
   text-align: center;
   font-family: $font-family-handwritten;
-  font-size: $font-size-base;
+  font-size: $font-size-md;
   color: $color-text-tertiary;
   font-style: italic;
 }
@@ -286,7 +286,7 @@
   .searchInput {
     color: $color-chalkboard-chalk;
     font-family: $font-family-mono;
-    font-size: $font-size-xs;
+    font-size: $font-size-sm;
     background-color: rgba($color-chalkboard-bg, 0.4);
     background-image: none;
     border: 1px solid $color-chalkboard-border;
@@ -310,7 +310,7 @@
   .th {
     font-family: $font-family-handwritten;
     font-weight: $font-weight-semibold;
-    font-size: $font-size-base;
+    font-size: $font-size-md;
     text-transform: uppercase;
     letter-spacing: $letter-spacing-wider;
     color: $color-chalkboard-chalk;

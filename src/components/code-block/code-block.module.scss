@@ -9,7 +9,7 @@
 
 .header {
   padding: 0.625rem 1.25rem;
-  font-size: $font-size-2xs;
+  font-size: $font-size-xs;
   font-family: $font-family-mono;
   border-bottom: 1px solid $color-border-default;
   background-color: $color-bg-elevated;
@@ -32,7 +32,7 @@
 
 .pre {
   padding: 1.25rem;
-  font-size: $font-size-xs;
+  font-size: $font-size-sm;
   line-height: 1.625;
   overflow-x: auto;
   background-color: $color-code-bg;
@@ -52,7 +52,7 @@
   border-bottom-color: $color-chalkboard-border;
   color: $color-chalkboard-muted-dim;
   font-family: 'Courier Prime', monospace;
-  font-size: $font-size-sm-alt;
+  font-size: $font-size-sm;
   letter-spacing: 0.04em;
 }
 
@@ -60,7 +60,7 @@
   background-color: $color-chalkboard-bg;
   color: $color-chalkboard-chalk;
   font-family: 'Courier Prime', monospace;
-  font-size: $font-size-base-alt;
+  font-size: $font-size-base;
   line-height: $line-height-relaxed;
   padding: 1.25rem 1.5rem;
   opacity: 0.92;

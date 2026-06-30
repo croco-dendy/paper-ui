@@ -9,7 +9,7 @@
 
 .label {
   font-family: var(--paper-font-default, $font-family-serif);
-  font-size: $font-size-sm;
+  font-size: $font-size-base;
   font-weight: $font-weight-semibold;
   color: $color-text-primary;
   letter-spacing: $letter-spacing-wide;
@@ -34,7 +34,7 @@
     color: $color-text-tertiary;
     font-weight: $font-weight-normal;
     font-family: $font-family-handwritten;
-    font-size: $font-size-base;
+    font-size: $font-size-md;
   }
 
   &:hover {
@@ -62,17 +62,17 @@
 
 .small {
   padding: $space-2 $space-3;
-  font-size: $font-size-xs;
+  font-size: $font-size-sm;
 }
 
 .medium {
   padding: $space-3 $space-4;
-  font-size: $font-size-sm;
+  font-size: $font-size-base;
 }
 
 .large {
   padding: $space-4 $space-5;
-  font-size: $font-size-base;
+  font-size: $font-size-md;
 }
 
 .error {
@@ -88,7 +88,7 @@
 
 .helperText {
   font-family: $font-family-handwritten;
-  font-size: $font-size-sm;
+  font-size: $font-size-base;
   color: $color-text-tertiary;
 }
 

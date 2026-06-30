@@ -100,19 +100,16 @@ $font-family-serif: 'Luminari', 'Cormorant Garamond', Georgia, serif;
 $font-family-handwritten: 'Caveat', cursive;
 $font-family-mono: 'JetBrains Mono', monospace;
 
-$font-size-2xs: 0.75rem;
-$font-size-xs-alt: 0.8rem;
-$font-size-xs: 0.875rem;
-$font-size-sm-alt: 0.85rem;
-$font-size-sm: 1rem;
-$font-size-base: 1.125rem;
-$font-size-base-alt: 1.05rem;
-$font-size-md: 1.25rem;
-$font-size-md-alt: 1.15rem;
-$font-size-lg: 1.5rem;
-$font-size-xl: 1.875rem;
-$font-size-2xl: 2.5rem;
-$font-size-3xl: 3.5rem;
+// Type scale — base = 1rem = 16px
+$font-size-xs: 0.75rem; // 12px
+$font-size-sm: 0.875rem; // 14px
+$font-size-base: 1rem; // 16px — body default
+$font-size-md: 1.125rem; // 18px
+$font-size-lg: 1.25rem; // 20px
+$font-size-xl: 1.5rem; // 24px
+$font-size-2xl: 1.875rem; // 30px
+$font-size-3xl: 2.5rem; // 40px
+$font-size-4xl: 3.5rem; // 56px
 
 $font-weight-normal: 400;
 $font-weight-medium: 500;

@@ -82,13 +82,13 @@
 
 .small {
   padding: $space-1 $space-2;
-  font-size: $font-size-sm;
+  font-size: $font-size-base;
   line-height: $line-height-tight;
 }
 
 .medium {
   padding: $space-2 $space-3;
-  font-size: $font-size-base;
+  font-size: $font-size-md;
   line-height: $line-height-tight;
 }
 
