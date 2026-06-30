@@ -3,6 +3,7 @@
   "version": "0.2.0",
   "description": "Natural-material React component library — paper, ink, canvas, and watercolor",
   "type": "module",
+  "packageManager": "pnpm@10.12.1",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
