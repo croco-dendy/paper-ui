@@ -93,7 +93,7 @@ export const DetailSidebar: FC<DetailSidebarProps> = ({ open, title, id, props, 
             <div className={styles.sectionLabel}>Props</div>
             <PropTable
               props={props}
-              variant="chalkboard"
+              surface="chalkboard"
               selectedValues={selectedValues}
               onValueChange={handleValueChange}
             />
@@ -102,7 +102,7 @@ export const DetailSidebar: FC<DetailSidebarProps> = ({ open, title, id, props, 
         {code && (
           <div className={styles.section}>
             <div className={styles.sectionLabel}>Code</div>
-            <CodeBlock code={code} filename={`${id ?? title}.example.tsx`} variant="chalkboard" />
+            <CodeBlock code={code} filename={`${id ?? title}.example.tsx`} surface="chalkboard" />
           </div>
         )}
       </div>

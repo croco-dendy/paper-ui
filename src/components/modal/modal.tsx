@@ -12,7 +12,7 @@ export interface ModalProps {
   title?: string;
   children: ReactNode;
   size?: 'small' | 'medium' | 'large';
-  variant?: 'default' | 'chalkboard';
+  surface?: 'paper' | 'chalkboard';
   texture?: TextureConfig;
   withTexture?: boolean;
   className?: string;
@@ -27,7 +27,7 @@ export function Modal({
   title,
   children,
   size = 'medium',
-  variant = 'default',
+  surface = 'paper',
   texture,
   withTexture = false,
   className,
@@ -99,7 +99,7 @@ export function Modal({
         className={cn(
           styles.modal,
           styles[size],
-          variant === 'chalkboard' && styles.chalkboard,
+          surface === 'chalkboard' && styles.chalkboard,
           className,
         )}
         style={textureStyles}

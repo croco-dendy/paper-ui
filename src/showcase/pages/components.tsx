@@ -510,7 +510,7 @@ const sectionDetails: SectionDetail[] = [
 />`,
     props: [
       {
-        name: 'variant',
+        name: 'surface',
         type: "'paper' | 'chalkboard'",
         default: "'paper'",
         description: 'Table visual style',
@@ -544,7 +544,7 @@ const sectionDetails: SectionDetail[] = [
     title: 'Island',
     codeExample: `import { Island } from '@dendelion/paper-ui';
 
-<Island variant="default">
+<Island surface="paper">
   <span>Controls go here</span>
 </Island>`,
     props: [
@@ -555,9 +555,9 @@ const sectionDetails: SectionDetail[] = [
         description: 'Content to render inside the island',
       },
       {
-        name: 'variant',
-        type: "'default' | 'chalkboard'",
-        default: "'default'",
+        name: 'surface',
+        type: "'paper' | 'chalkboard'",
+        default: "'paper'",
         description: 'Visual style variant',
       },
     ],
@@ -594,9 +594,9 @@ const sectionDetails: SectionDetail[] = [
         description: 'Tab selection handler',
       },
       {
-        name: 'variant',
-        type: "'default' | 'chalkboard'",
-        description: 'Visual style variant (passed to Card)',
+        name: 'surface',
+        type: "'paper' | 'chalkboard'",
+        description: 'Surface style (passed to Card)',
       },
     ],
   },
@@ -720,9 +720,9 @@ const sectionDetails: SectionDetail[] = [
       },
       sizeProp,
       {
-        name: 'variant',
-        type: "'default' | 'chalkboard'",
-        default: "'default'",
+        name: 'surface',
+        type: "'paper' | 'chalkboard'",
+        default: "'paper'",
         description: 'Visual style variant',
       },
     ],
@@ -959,10 +959,10 @@ export const ComponentsPage: FC<{
             <div className="flex flex-wrap items-center gap-5">
               {chalkboardTheme ? (
                 <>
-                  <Button variant="chalkboard" wobble={buttonWobble}>
+                  <Button surface="chalkboard" wobble={buttonWobble}>
                     Chalkboard
                   </Button>
-                  <Button variant="chalkboard" disabled wobble={buttonWobble}>
+                  <Button surface="chalkboard" disabled wobble={buttonWobble}>
                     Disabled
                   </Button>
                 </>
@@ -1002,13 +1002,13 @@ export const ComponentsPage: FC<{
                   <IconButton
                     icon={<HeartIcon />}
                     label="Like"
-                    variant="chalkboard"
+                    surface="chalkboard"
                     wobble={buttonWobble}
                   />
                   <IconButton
                     icon={<TrashIcon />}
                     label="Delete"
-                    variant="chalkboard"
+                    surface="chalkboard"
                     wobble={buttonWobble}
                   />
                 </>
@@ -1048,17 +1048,17 @@ export const ComponentsPage: FC<{
             <div className="flex flex-wrap items-center gap-5">
               {chalkboardTheme ? (
                 <>
-                  <Stamp size="small" variant="chalkboard">
+                  <Stamp size="small" surface="chalkboard">
                     Small
                   </Stamp>
-                  <Stamp variant="chalkboard">Done</Stamp>
-                  <Stamp size="large" variant="chalkboard">
+                  <Stamp surface="chalkboard">Done</Stamp>
+                  <Stamp size="large" surface="chalkboard">
                     Draft
                   </Stamp>
-                  <Stamp size="small" variant="chalkboard">
+                  <Stamp size="small" surface="chalkboard">
                     Alert
                   </Stamp>
-                  <Stamp variant="chalkboard">Info</Stamp>
+                  <Stamp surface="chalkboard">Info</Stamp>
                 </>
               ) : (
                 <>
@@ -1180,14 +1180,14 @@ export const ComponentsPage: FC<{
                 label="Enable feature"
                 checked={checked1}
                 wobble={buttonWobble}
-                variant={chalkboardTheme ? 'chalkboard' : 'default'}
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
                 onChange={(e) => setChecked1(e.target.checked)}
               />
               <Checkbox
                 label="Already checked"
                 checked={checked2}
                 wobble={buttonWobble}
-                variant={chalkboardTheme ? 'chalkboard' : 'default'}
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
                 onChange={(e) => setChecked2(e.target.checked)}
               />
               <Checkbox
@@ -1195,7 +1195,7 @@ export const ComponentsPage: FC<{
                 disabled
                 checked={false}
                 wobble={buttonWobble}
-                variant={chalkboardTheme ? 'chalkboard' : 'default'}
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
                 onChange={() => {}}
               />
             </div>
@@ -1214,7 +1214,7 @@ export const ComponentsPage: FC<{
                 label="Project name"
                 placeholder="Enter a name..."
                 value={inputValue}
-                variant={chalkboardTheme ? 'chalkboard' : 'default'}
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
                 onChange={(e) => setInputValue(e.target.value)}
               />
               <Input
@@ -1222,26 +1222,26 @@ export const ComponentsPage: FC<{
                 type="email"
                 size="small"
                 placeholder="small"
-                variant={chalkboardTheme ? 'chalkboard' : 'default'}
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
               />
               <Input
                 label="Description"
                 size="large"
                 placeholder="large input"
-                variant={chalkboardTheme ? 'chalkboard' : 'default'}
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
               />
               <Input
                 label="Password"
                 type="password"
                 error
                 helperText="Must be at least 8 characters"
-                variant={chalkboardTheme ? 'chalkboard' : 'default'}
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
               />
               <Input
                 label="Disabled"
                 disabled
                 placeholder="Cannot edit"
-                variant={chalkboardTheme ? 'chalkboard' : 'default'}
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
               />
             </div>
           </ComponentSection>
@@ -1257,7 +1257,7 @@ export const ComponentsPage: FC<{
             <div className="space-y-4 max-w-sm">
               <Select
                 label="Texture"
-                variant={chalkboardTheme ? 'chalkboard' : 'default'}
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
                 options={[
                   { value: 'paper', label: 'Paper' },
                   { value: 'canvas', label: 'Canvas' },
@@ -1268,7 +1268,7 @@ export const ComponentsPage: FC<{
               />
               <Select
                 label="Size"
-                variant={chalkboardTheme ? 'chalkboard' : 'default'}
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
                 size="small"
                 options={[
                   { value: 'small', label: 'Small' },
@@ -1279,7 +1279,7 @@ export const ComponentsPage: FC<{
               />
               <Select
                 label="Disabled"
-                variant={chalkboardTheme ? 'chalkboard' : 'default'}
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
                 disabled
                 options={[{ value: 'none', label: 'Not available' }]}
                 placeholder="Cannot select"
@@ -1300,20 +1300,20 @@ export const ComponentsPage: FC<{
                 label="Notes"
                 placeholder="Write your notes..."
                 value={textareaValue}
-                variant={chalkboardTheme ? 'chalkboard' : 'default'}
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
                 onChange={(e) => setTextareaValue(e.target.value)}
               />
               <Textarea
                 label="Error"
                 error
                 helperText="This field is required"
-                variant={chalkboardTheme ? 'chalkboard' : 'default'}
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
                 placeholder="example"
               />
               <Textarea
                 label="Disabled"
                 disabled
-                variant={chalkboardTheme ? 'chalkboard' : 'default'}
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
                 placeholder="Cannot edit"
               />
             </div>
@@ -1425,7 +1425,7 @@ export const ComponentsPage: FC<{
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {chalkboardTheme ? (
                 <>
-                  <Card variant="chalkboard">
+                  <Card surface="chalkboard">
                     <h4
                       className="font-bold mb-2"
                       style={{
@@ -1446,7 +1446,7 @@ export const ComponentsPage: FC<{
                       Chalkboard card with pencil border.
                     </p>
                   </Card>
-                  <Card variant="chalkboard">
+                  <Card surface="chalkboard">
                     <h4
                       className="font-bold mb-2"
                       style={{
@@ -1526,7 +1526,7 @@ export const ComponentsPage: FC<{
           >
             <div className="w-full max-w-2xl space-y-4">
               <Table
-                variant={chalkboardTheme ? 'chalkboard' : 'paper'}
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
                 toolbar={{
                   search: {
                     placeholder: 'Search entries...',
@@ -1538,13 +1538,15 @@ export const ComponentsPage: FC<{
                       <IconButton
                         icon={<FilterIcon />}
                         label="Filter"
-                        variant={v === 'chalkboard' ? 'chalkboard' : 'ghost'}
+                        variant="ghost"
+                        surface={v}
                         size="small"
                       />
                       <IconButton
                         icon={<DownloadIcon />}
                         label="Export"
-                        variant={v === 'chalkboard' ? 'chalkboard' : 'ghost'}
+                        variant="ghost"
+                        surface={v}
                         size="small"
                       />
                     </>
@@ -1728,7 +1730,7 @@ export const ComponentsPage: FC<{
                   },
                 ]}
                 activeKey={activeTab}
-                variant={chalkboardTheme ? 'chalkboard' : 'default'}
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
                 onSelect={(id) => setActiveTab(id)}
               />
             </div>
@@ -1744,7 +1746,7 @@ export const ComponentsPage: FC<{
           >
             <div className="space-y-4 max-w-lg">
               {chalkboardTheme ? (
-                <Alert variant="chalkboard" title="Chalkboard">
+                <Alert surface="chalkboard" title="Chalkboard">
                   This alert is styled for chalkboard surfaces.
                 </Alert>
               ) : (
@@ -1817,7 +1819,8 @@ export const ComponentsPage: FC<{
           >
             <div className="flex flex-wrap items-center gap-5">
               <Button
-                variant={chalkboardTheme ? 'chalkboard' : 'primary'}
+                variant="primary"
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
                 onClick={() => setModalOpen(true)}
               >
                 Open Modal
@@ -1828,7 +1831,7 @@ export const ComponentsPage: FC<{
               onClose={() => setModalOpen(false)}
               title="Journal Entry"
               size="medium"
-              variant={chalkboardTheme ? 'chalkboard' : 'default'}
+              surface={chalkboardTheme ? 'chalkboard' : 'paper'}
             >
               <p
                 style={{
@@ -1843,13 +1846,15 @@ export const ComponentsPage: FC<{
               </p>
               <div className="mt-6 flex justify-end gap-3">
                 <Button
-                  variant={chalkboardTheme ? 'chalkboard' : 'ghost'}
+                  variant="ghost"
+                  surface={chalkboardTheme ? 'chalkboard' : 'paper'}
                   onClick={() => setModalOpen(false)}
                 >
                   Cancel
                 </Button>
                 <Button
-                  variant={chalkboardTheme ? 'chalkboard' : 'primary'}
+                  variant="primary"
+                  surface={chalkboardTheme ? 'chalkboard' : 'paper'}
                   onClick={() => setModalOpen(false)}
                 >
                   Save
@@ -1860,7 +1865,7 @@ export const ComponentsPage: FC<{
         </div>
       </div>
 
-      <Island variant="default">
+      <Island surface="paper">
         <span
           className="text-sm shrink-0"
           style={{

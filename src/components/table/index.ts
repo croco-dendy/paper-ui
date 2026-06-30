@@ -6,7 +6,7 @@ export type {
   TableExpandableConfig,
   TableBoardColumn,
   TableAccentColor,
-  TableVariant,
+  TableSurface,
 } from './table';
 
 export { TableCellToggle } from './table-cell-toggle';

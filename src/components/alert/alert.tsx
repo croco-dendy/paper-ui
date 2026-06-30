@@ -6,7 +6,8 @@ import styles from './alert.module.scss';
 
 export interface AlertProps {
   children: ReactNode;
-  variant?: 'info' | 'success' | 'warning' | 'error' | 'chalkboard';
+  variant?: 'info' | 'success' | 'warning' | 'error';
+  surface?: 'paper' | 'chalkboard';
   texture?: PaperTextureKey;
   title?: string;
   dismissible?: boolean;
@@ -17,17 +18,18 @@ export interface AlertProps {
 export function Alert({
   children,
   variant = 'info',
+  surface = 'paper',
   texture = 'canvas',
   title,
   dismissible = false,
   onDismiss,
   className,
 }: AlertProps) {
-  const isChalkboard = variant === 'chalkboard';
+  const isChalkboard = surface === 'chalkboard';
 
   return (
     <div
-      className={cn(styles.alert, styles[variant], className)}
+      className={cn(styles.alert, styles[variant], isChalkboard && styles.chalkboard, className)}
       style={{
         backgroundColor: isChalkboard ? undefined : textureColorMap[texture],
         backgroundImage: isChalkboard ? undefined : textureMap[texture],

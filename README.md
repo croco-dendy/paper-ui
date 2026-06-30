@@ -102,6 +102,13 @@ The library exports 24 components. The core layout and form primitives are docum
 
 All components are named exports with a matching `{Component}Props` type.
 
+Components that support the dark "chalkboard" theme accept a `surface` prop (`'paper' | 'chalkboard'`, default `'paper'`), kept separate from each component's semantic `variant`:
+
+```tsx
+<Button variant="primary" surface="chalkboard">Save</Button>
+<Input label="Name" surface="chalkboard" />
+```
+
 ### Layout
 
 Page shell with configurable sidebar, header, footer, and content area.

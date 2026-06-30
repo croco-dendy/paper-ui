@@ -62,7 +62,7 @@ export type {
   TableExpandableConfig,
   TableBoardColumn,
   TableAccentColor,
-  TableVariant,
+  TableSurface,
 } from './components/table';
 
 export { Textarea } from './components/textarea';

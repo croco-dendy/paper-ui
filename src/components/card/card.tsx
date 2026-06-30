@@ -6,7 +6,8 @@ import styles from './card.module.scss';
 
 export interface CardProps {
   children: ReactNode;
-  variant?: 'default' | 'elevated' | 'chalkboard';
+  variant?: 'default' | 'elevated';
+  surface?: 'paper' | 'chalkboard';
   size?: 'small' | 'medium';
   texture?: PaperTextureKey;
   accent?: boolean;
@@ -19,6 +20,7 @@ const accentClassMap = createAccentClassMap(styles);
 export function Card({
   children,
   variant = 'default',
+  surface = 'paper',
   size = 'medium',
   texture = 'parchment',
   accent = false,
@@ -30,6 +32,7 @@ export function Card({
       className={cn(
         styles.borderLayer,
         styles[variant],
+        surface === 'chalkboard' && styles.chalkboard,
         styles[size],
         accent && styles.withAccent,
         accent && accentClassMap[accentColor],
@@ -39,7 +42,7 @@ export function Card({
       <div
         className={styles.textureLayer}
         style={
-          variant === 'chalkboard'
+          surface === 'chalkboard'
             ? undefined
             : {
                 backgroundColor: textureColorMap[texture],

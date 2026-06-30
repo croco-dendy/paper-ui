@@ -6,14 +6,14 @@ export interface TableCellDropdownProps {
   options: string[];
   value: string;
   onChange: (value: string) => void;
-  variant?: 'default' | 'chalkboard';
+  surface?: 'paper' | 'chalkboard';
 }
 
 export function TableCellDropdown({
   options,
   value,
   onChange,
-  variant = 'default',
+  surface = 'paper',
 }: TableCellDropdownProps) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -35,7 +35,7 @@ export function TableCellDropdown({
         type="button"
         className={cn(
           styles.dropdownToggle,
-          variant === 'chalkboard' && styles.chalkDropdownToggle,
+          surface === 'chalkboard' && styles.chalkDropdownToggle,
         )}
         onClick={() => setOpen(!open)}
       >
@@ -57,14 +57,14 @@ export function TableCellDropdown({
         </svg>
       </button>
       {open && (
-        <div className={cn(styles.dropdown, variant === 'chalkboard' && styles.chalkDropdown)}>
+        <div className={cn(styles.dropdown, surface === 'chalkboard' && styles.chalkDropdown)}>
           {options.map((opt) => (
             <button
               key={opt}
               type="button"
               className={cn(
                 styles.dropdownItem,
-                variant === 'chalkboard' && styles.chalkDropdownItem,
+                surface === 'chalkboard' && styles.chalkDropdownItem,
               )}
               onClick={() => {
                 onChange(opt);

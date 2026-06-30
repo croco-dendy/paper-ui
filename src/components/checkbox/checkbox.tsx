@@ -9,7 +9,7 @@ export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement
   labelPosition?: 'left' | 'right';
   indeterminate?: boolean;
   wobble?: number;
-  variant?: 'default' | 'chalkboard';
+  surface?: 'paper' | 'chalkboard';
 }
 
 export function Checkbox({
@@ -17,7 +17,7 @@ export function Checkbox({
   labelPosition = 'right',
   indeterminate = false,
   wobble = 0.4,
-  variant = 'default',
+  surface = 'paper',
   className,
   checked,
   onChange,
@@ -31,7 +31,7 @@ export function Checkbox({
       className={cn(
         styles.wrapper,
         labelPosition === 'left' && styles.labelLeft,
-        variant === 'chalkboard' && styles.chalkboard,
+        surface === 'chalkboard' && styles.chalkboard,
         className,
       )}
       htmlFor={id}

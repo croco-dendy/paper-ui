@@ -15,7 +15,7 @@ export interface PropDef {
 
 export interface PropTableProps {
   props: PropDef[];
-  variant?: 'default' | 'chalkboard';
+  surface?: 'paper' | 'chalkboard';
   selectedValues?: Record<string, string | boolean>;
   onValueChange?: (propName: string, value: string | boolean) => void;
 }
@@ -34,16 +34,15 @@ function isEditableType(type: string): 'number' | 'string' | null {
 
 function PropValue({
   prop,
-  variant,
+  surface,
   selectedValue,
   onValueChange,
 }: {
   prop: PropDef;
-  variant: 'default' | 'chalkboard';
+  surface: 'paper' | 'chalkboard';
   selectedValue: string | boolean | undefined;
   onValueChange: (value: string | boolean) => void;
 }) {
-  const cellVariant = variant === 'chalkboard' ? 'chalkboard' : 'default';
   const options = parseOptions(prop.type);
   const isBoolean = prop.type === 'boolean';
   const editable = isEditableType(prop.type);
@@ -52,7 +51,7 @@ function PropValue({
     return (
       <TableCellToggle
         checked={selectedValue === true}
-        variant={cellVariant}
+        surface={surface}
         onChange={onValueChange}
       />
     );
@@ -65,7 +64,7 @@ function PropValue({
         kind={editable}
         value={val}
         placeholder={prop.default ?? prop.type}
-        variant={cellVariant}
+        surface={surface}
         onChange={(v) => onValueChange(v)}
       />
     );
@@ -77,14 +76,14 @@ function PropValue({
       <TableCellDropdown
         options={options}
         value={current}
-        variant={cellVariant}
+        surface={surface}
         onChange={onValueChange}
       />
     );
   }
 
   return (
-    <span className={cn(styles.codeName, variant === 'chalkboard' && styles.chalkCodeName)}>
+    <span className={cn(styles.codeName, surface === 'chalkboard' && styles.chalkCodeName)}>
       {prop.type}
     </span>
   );
@@ -92,7 +91,7 @@ function PropValue({
 
 export function PropTable({
   props,
-  variant = 'default',
+  surface = 'paper',
   selectedValues,
   onValueChange,
 }: PropTableProps) {
@@ -103,18 +102,15 @@ export function PropTable({
     [onValueChange],
   );
 
-  const tableVariant = variant === 'chalkboard' ? 'chalkboard' : 'paper';
-  const cellVariant = variant === 'chalkboard' ? 'chalkboard' : 'default';
-
   const columns: TableColumn<PropDef>[] = [
     {
       key: 'name',
       header: 'Prop',
       cell: (prop) => (
-        <code className={cn(styles.codeName, variant === 'chalkboard' && styles.chalkCodeName)}>
+        <code className={cn(styles.codeName, surface === 'chalkboard' && styles.chalkCodeName)}>
           {prop.name}
           {prop.required && (
-            <span className={cn(styles.required, variant === 'chalkboard' && styles.chalkRequired)}>
+            <span className={cn(styles.required, surface === 'chalkboard' && styles.chalkRequired)}>
               *
             </span>
           )}
@@ -127,7 +123,7 @@ export function PropTable({
       cell: (prop) => (
         <PropValue
           prop={prop}
-          variant={variant}
+          surface={surface}
           selectedValue={selectedValues?.[prop.name]}
           onValueChange={(v) => handleChange(prop.name, v)}
         />
@@ -137,7 +133,7 @@ export function PropTable({
       key: 'description',
       header: 'Description',
       cell: (prop) => (
-        <span className={cn(styles.desc, variant === 'chalkboard' && styles.chalkDesc)}>
+        <span className={cn(styles.desc, surface === 'chalkboard' && styles.chalkDesc)}>
           {prop.description}
         </span>
       ),
@@ -148,8 +144,8 @@ export function PropTable({
     <Table
       data={props}
       columns={columns}
-      variant={tableVariant}
-      className={cn(styles.wrapper, variant === 'chalkboard' && styles.chalkboard)}
+      surface={surface}
+      className={cn(styles.wrapper, surface === 'chalkboard' && styles.chalkboard)}
     />
   );
 }

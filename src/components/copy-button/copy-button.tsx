@@ -5,10 +5,17 @@ import styles from './copy-button.module.scss';
 
 export interface CopyButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
-  variant?: 'light' | 'dark' | 'chalkboard';
+  variant?: 'light' | 'dark';
+  surface?: 'paper' | 'chalkboard';
 }
 
-export function CopyButton({ text, variant = 'light', className, ...props }: CopyButtonProps) {
+export function CopyButton({
+  text,
+  variant = 'light',
+  surface = 'paper',
+  className,
+  ...props
+}: CopyButtonProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = useCallback(async () => {
@@ -28,7 +35,7 @@ export function CopyButton({ text, variant = 'light', className, ...props }: Cop
       className={cn(
         styles.copyButton,
         variant === 'dark' && styles.dark,
-        variant === 'chalkboard' && styles.chalkboard,
+        surface === 'chalkboard' && styles.chalkboard,
         copied && styles.copied,
         className,
       )}

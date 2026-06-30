@@ -15,11 +15,11 @@ export interface TabsProps {
   items: TabItem[];
   activeKey?: string;
   onSelect?: (id: string) => void;
-  variant?: 'default' | 'chalkboard';
+  surface?: 'paper' | 'chalkboard';
   className?: string;
 }
 
-export function Tabs({ items, activeKey, onSelect, variant = 'default', className }: TabsProps) {
+export function Tabs({ items, activeKey, onSelect, surface = 'paper', className }: TabsProps) {
   const activeItem = items.find((item) => item.id === activeKey);
 
   return (
@@ -41,10 +41,7 @@ export function Tabs({ items, activeKey, onSelect, variant = 'default', classNam
         ))}
       </div>
       {activeItem?.children && (
-        <Card
-          variant={variant === 'chalkboard' ? 'chalkboard' : 'default'}
-          className={styles.content}
-        >
+        <Card surface={surface} className={styles.content}>
           {activeItem.children}
         </Card>
       )}

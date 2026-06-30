@@ -8,7 +8,7 @@ export interface TextareaProps extends Omit<TextareaHTMLAttributes<HTMLTextAreaE
   helperText?: string;
   error?: boolean;
   size?: 'small' | 'medium' | 'large';
-  variant?: 'default' | 'chalkboard';
+  surface?: 'paper' | 'chalkboard';
   className?: string;
 }
 
@@ -17,7 +17,7 @@ export function Textarea({
   helperText,
   error = false,
   size = 'medium',
-  variant = 'default',
+  surface = 'paper',
   className,
   id,
   ...props
@@ -26,7 +26,7 @@ export function Textarea({
   const textareaId = id ?? generatedId;
 
   return (
-    <div className={cn(styles.wrapper, variant === 'chalkboard' && styles.chalkboard, className)}>
+    <div className={cn(styles.wrapper, surface === 'chalkboard' && styles.chalkboard, className)}>
       {label && (
         <label htmlFor={textareaId} className={styles.label}>
           {label}

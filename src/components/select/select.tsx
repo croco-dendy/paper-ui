@@ -16,7 +16,7 @@ export interface SelectProps {
   helperText?: string;
   error?: boolean;
   size?: 'small' | 'medium' | 'large';
-  variant?: 'default' | 'chalkboard';
+  surface?: 'paper' | 'chalkboard';
   options: SelectOption[];
   placeholder?: string;
   value?: string;
@@ -34,7 +34,7 @@ export function Select({
   helperText,
   error = false,
   size = 'medium',
-  variant = 'default',
+  surface = 'paper',
   options,
   placeholder,
   value,
@@ -213,7 +213,7 @@ export function Select({
 
   return (
     <div
-      className={cn(styles.wrapper, variant === 'chalkboard' && styles.chalkboard, className)}
+      className={cn(styles.wrapper, surface === 'chalkboard' && styles.chalkboard, className)}
       style={width ? { width: typeof width === 'number' ? `${width}px` : width } : undefined}
     >
       {label && (

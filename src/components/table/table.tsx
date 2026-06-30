@@ -1,18 +1,18 @@
 import type { ReactNode } from 'react';
 import { Fragment, useState } from 'react';
 import { createAccentClassMap } from '../../utils/accent-class-map';
-import { getVariantTexture } from '../../utils/get-variant-texture';
+import { getSurfaceTexture } from '../../utils/get-surface-texture';
 import { cn } from '../../utils/style-helpers';
 import type { TextureConfig } from '../../utils/textures';
 import styles from './table.module.scss';
 
-export type TableVariant = 'paper' | 'chalkboard';
+export type TableSurface = 'paper' | 'chalkboard';
 export type TableAccentColor = 'blue' | 'green' | 'amber' | 'rose' | 'slate';
 
 export interface TableColumn<T = unknown> {
   key: string;
   header: ReactNode;
-  cell: (row: T, index: number, variant: TableVariant) => ReactNode;
+  cell: (row: T, index: number, surface: TableSurface) => ReactNode;
   width?: number;
 }
 
@@ -22,11 +22,11 @@ export interface TableToolbar {
     value?: string;
     onChange?: (value: string) => void;
   };
-  actions?: ReactNode | ((variant: TableVariant) => ReactNode);
+  actions?: ReactNode | ((surface: TableSurface) => ReactNode);
 }
 
 export interface TableExpandableConfig<T = unknown> {
-  render: (row: T, index: number, variant: TableVariant) => ReactNode;
+  render: (row: T, index: number, surface: TableSurface) => ReactNode;
 }
 
 // A board column is a lane of cards (e.g. a status), rendered side by side
@@ -37,7 +37,7 @@ export interface TableBoardColumn<T = unknown> {
   accent?: TableAccentColor;
   items: T[];
   getKey?: (item: T, index: number) => string | number;
-  renderItem: (item: T, index: number, variant: TableVariant) => ReactNode;
+  renderItem: (item: T, index: number, surface: TableSurface) => ReactNode;
   emptyLabel?: ReactNode;
 }
 
@@ -47,7 +47,7 @@ export interface TableProps<T = unknown> {
   // When set, renders lanes of cards instead of the rows layout; `data`/`columns`/
   // `expandable` are ignored.
   board?: TableBoardColumn<T>[];
-  variant?: 'paper' | 'chalkboard';
+  surface?: 'paper' | 'chalkboard';
   texture?: TextureConfig;
   toolbar?: TableToolbar;
   expandable?: TableExpandableConfig<T>;
@@ -62,7 +62,7 @@ export function Table<T = unknown>({
   data = [],
   columns = [],
   board,
-  variant = 'paper',
+  surface = 'paper',
   texture,
   toolbar,
   expandable,
@@ -70,7 +70,7 @@ export function Table<T = unknown>({
   rowClassName,
   className,
 }: TableProps<T>) {
-  const textureStyles = getVariantTexture(variant, texture);
+  const textureStyles = getSurfaceTexture(surface, texture);
   const hasToolbar = !!toolbar;
   const [expandedRows, setExpandedRows] = useState<Set<number>>(new Set());
 
@@ -93,7 +93,7 @@ export function Table<T = unknown>({
     <div
       className={cn(
         styles.tableWrapper,
-        variant === 'chalkboard' && styles.chalkboardWrapper,
+        surface === 'chalkboard' && styles.chalkboardWrapper,
         className,
       )}
       style={textureStyles}
@@ -114,7 +114,7 @@ export function Table<T = unknown>({
           )}
           {toolbar.actions && (
             <div className={styles.toolbarActions}>
-              {typeof toolbar.actions === 'function' ? toolbar.actions(variant) : toolbar.actions}
+              {typeof toolbar.actions === 'function' ? toolbar.actions(surface) : toolbar.actions}
             </div>
           )}
         </div>
@@ -128,7 +128,7 @@ export function Table<T = unknown>({
                 <div
                   className={cn(
                     styles.boardColumnHeader,
-                    variant === 'chalkboard' && styles.chalkboard,
+                    surface === 'chalkboard' && styles.chalkboard,
                     col.accent && accentClassMap[col.accent],
                   )}
                 >
@@ -144,10 +144,10 @@ export function Table<T = unknown>({
                         key={col.getKey ? col.getKey(item, itemIndex) : itemIndex}
                         className={cn(
                           styles.boardRow,
-                          variant === 'chalkboard' && styles.chalkboard,
+                          surface === 'chalkboard' && styles.chalkboard,
                         )}
                       >
-                        {col.renderItem(item, itemIndex, variant)}
+                        {col.renderItem(item, itemIndex, surface)}
                       </div>
                     ))
                   )}
@@ -158,7 +158,7 @@ export function Table<T = unknown>({
         </div>
       ) : (
         <div className={styles.tableScroll}>
-          <table className={cn(styles.table, variant === 'chalkboard' && styles.chalkboard)}>
+          <table className={cn(styles.table, surface === 'chalkboard' && styles.chalkboard)}>
             <colgroup>
               {hasExpandColumn && <col style={{ width: '48px' }} />}
               {columns.map((col) => (
@@ -182,7 +182,7 @@ export function Table<T = unknown>({
             </thead>
             <tbody>
               {data.map((row, rowIndex) => {
-                const expansionContent = expandable?.render(row, rowIndex, variant);
+                const expansionContent = expandable?.render(row, rowIndex, surface);
                 const canExpand = !!expansionContent;
                 const isExpanded = canExpand && expandedRows.has(rowIndex);
                 return (
@@ -216,7 +216,7 @@ export function Table<T = unknown>({
                       )}
                       {columns.map((col) => (
                         <td key={col.key} className={styles.td}>
-                          {col.cell(row, rowIndex, variant)}
+                          {col.cell(row, rowIndex, surface)}
                         </td>
                       ))}
                     </tr>

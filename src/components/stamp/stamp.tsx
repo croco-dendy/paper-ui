@@ -9,7 +9,7 @@ export interface StampProps {
   fillColor?: string;
   textColor?: string;
   wobble?: number;
-  variant?: 'default' | 'chalkboard';
+  surface?: 'paper' | 'chalkboard';
   className?: string;
 }
 
@@ -19,7 +19,7 @@ export function Stamp({
   fillColor = 'transparent',
   textColor,
   wobble = 0.3,
-  variant = 'default',
+  surface = 'paper',
   className,
 }: StampProps) {
   const paths = useBlobPaths(wobble);
@@ -29,7 +29,7 @@ export function Stamp({
       className={cn(
         styles.stamp,
         styles[size],
-        variant === 'chalkboard' && styles.chalkboard,
+        surface === 'chalkboard' && styles.chalkboard,
         className,
       )}
       style={textColor ? { color: textColor } : undefined}
