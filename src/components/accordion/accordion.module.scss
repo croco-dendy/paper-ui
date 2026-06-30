@@ -19,6 +19,10 @@
   cursor: pointer;
   text-align: left;
 
+  &:hover .icon {
+    color: $color-text-primary;
+  }
+
   &:focus-visible {
     outline: 2px solid $color-focus-ring;
     outline-offset: 2px;
@@ -35,7 +39,7 @@
   height: 1em;
   font-size: 0.65em;
   color: $color-text-secondary;
-  transition: transform 200ms ease;
+  transition: transform 200ms ease, color $transition-fast;
 }
 
 .title {
