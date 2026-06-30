@@ -53,7 +53,7 @@ export const paperPreset = {
           950: '#383224',
         },
         watercolor: {
-          blue: { DEFAULT: '#8FB996', light: '#B5D4BA', dark: '#5E8A66' },
+          blue: { DEFAULT: '#7C9CC0', light: '#AFC6E0', dark: '#51719B' },
           green: { DEFAULT: '#8FB996', light: '#B5D4BA', dark: '#5E8A66' },
           amber: { DEFAULT: '#D4A373', light: '#E4C9A8', dark: '#A67B4F' },
           rose: { DEFAULT: '#C98B8B', light: '#DEB5B5', dark: '#9E5E5E' },

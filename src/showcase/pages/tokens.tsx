@@ -82,7 +82,7 @@ const colors = {
     name: 'Watercolor',
     description: 'Soft blended washes for accents and hover states',
     shades: [
-      { name: 'blue', value: '#8FB996', textDark: true, light: '#B5D4BA', dark: '#5E8A66' },
+      { name: 'blue', value: '#7C9CC0', textDark: true, light: '#AFC6E0', dark: '#51719B' },
       { name: 'green', value: '#8FB996', textDark: true, light: '#B5D4BA', dark: '#5E8A66' },
       { name: 'amber', value: '#D4A373', textDark: true, light: '#E4C9A8', dark: '#A67B4F' },
       { name: 'rose', value: '#C98B8B', textDark: true, light: '#DEB5B5', dark: '#9E5E5E' },
