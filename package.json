@@ -48,12 +48,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/croco-dendy/paper-ui.git"
+    "url": "git+https://github.com/adooone/paper-ui.git"
   },
   "bugs": {
-    "url": "https://github.com/croco-dendy/paper-ui/issues"
+    "url": "https://github.com/adooone/paper-ui/issues"
   },
-  "homepage": "https://github.com/croco-dendy/paper-ui#readme",
+  "homepage": "https://github.com/adooone/paper-ui#readme",
   "keywords": [
     "react",
     "components",
