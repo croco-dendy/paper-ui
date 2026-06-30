@@ -42,9 +42,7 @@
     "check-types": "tsc --noEmit",
     "lint": "biome check ./src",
     "lint:fix": "biome check ./src --write",
-    "ci": "pnpm run check-types && pnpm run build && pnpm run test",
-    "publish:jsr": "pnpm dlx jsr publish",
-    "publish:jsr:dry": "pnpm dlx jsr publish --dry-run"
+    "ci": "pnpm run check-types && pnpm run build && pnpm run test"
   },
   "repository": {
     "type": "git",
