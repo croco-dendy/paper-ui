@@ -418,21 +418,16 @@ const sectionDetails: SectionDetail[] = [
     title: 'Page',
     codeExample: `import { Page } from '@dendelion/paper-ui';
 
-<Page withTexture withAccent accentColor="green">
+<Page withAccent accentColor="green">
   <h2>Journal Entry</h2>
   <p>Content on textured paper.</p>
 </Page>`,
     props: [
       {
-        name: 'withTexture',
-        type: 'boolean',
-        default: 'true',
-        description: 'Apply paper texture background',
-      },
-      {
         name: 'texture',
-        type: 'TextureConfig',
-        description: 'Custom texture configuration',
+        type: 'boolean | PaperTextureKey | TextureConfig',
+        default: 'true',
+        description: 'Background texture: a name, a config, or false to disable',
       },
       {
         name: 'withAccent',
@@ -824,10 +819,10 @@ const sectionDetails: SectionDetail[] = [
         description: 'Modal background texture',
       },
       {
-        name: 'withTexture',
-        type: 'boolean',
+        name: 'texture',
+        type: 'boolean | PaperTextureKey | TextureConfig',
         default: 'false',
-        description: 'Show default paper texture on modal',
+        description: 'Background texture: a name, a config, or false to disable',
       },
     ],
   },
@@ -1327,7 +1322,7 @@ export const ComponentsPage: FC<{
             onViewDetails={() => handleViewDetails('page')}
           >
             <div className="w-full max-w-lg space-y-4">
-              <Page withTexture withAccent accentColor="green">
+              <Page withAccent accentColor="green">
                 <h3
                   className="text-xl font-bold mb-2"
                   style={{
@@ -1347,7 +1342,7 @@ export const ComponentsPage: FC<{
                   The paper grain texture and watercolor accent create an organic reading surface.
                 </p>
               </Page>
-              <Page withTexture={false}>
+              <Page texture={false}>
                 <h3
                   className="text-xl font-bold mb-2"
                   style={{

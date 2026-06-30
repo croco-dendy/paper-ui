@@ -16,6 +16,12 @@ export interface TextureConfig {
   ruledColor?: RuledColorKey;
 }
 
+/** A texture as either a bare name (`"parchment"`) or a full config object. */
+export type Texture = PaperTextureKey | TextureConfig;
+
+/** The value a component's `texture` prop accepts: a texture, or `true`/`false` to toggle the default. */
+export type TextureProp = boolean | Texture;
+
 export const textureMap: Record<PaperTextureKey, string> = {
   paper:
     "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E\")",
@@ -50,7 +56,8 @@ export const ruledColorMap: Record<RuledColorKey, string> = {
   black: 'rgba(61, 53, 43, 0.15)',
 };
 
-export function getTextureStyles(config: TextureConfig): React.CSSProperties {
+export function getTextureStyles(input: Texture): React.CSSProperties {
+  const config: TextureConfig = typeof input === 'string' ? { texture: input } : input;
   const texture = config.texture ?? 'paper';
   const ruledType = config.ruledType ?? 'none';
   const ruledColor = config.ruledColor ?? 'blue';
@@ -83,4 +90,18 @@ export function getTextureStyles(config: TextureConfig): React.CSSProperties {
     backgroundRepeat: 'repeat, repeat, repeat',
     backgroundSize: '200px 200px, 100% 32px, 32px 32px',
   };
+}
+
+/**
+ * Resolves a component `texture` prop to background styles.
+ * - `false` → no texture (`undefined`)
+ * - `true` → the component's default texture (`fallback`)
+ * - a name or config → that texture
+ */
+export function resolveTexture(
+  value: TextureProp,
+  fallback: Texture = 'paper',
+): React.CSSProperties | undefined {
+  if (value === false) return undefined;
+  return getTextureStyles(value === true ? fallback : value);
 }

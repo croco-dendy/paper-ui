@@ -76,7 +76,7 @@ function App() {
         { id: 'plans', label: 'Plans', path: '/plans' },
       ]}
     >
-      <Page withTexture>
+      <Page>
         <Button variant="primary" size="medium">
           Create Plan
         </Button>
@@ -135,9 +135,17 @@ Page shell with configurable sidebar, header, footer, and content area.
 Content wrapper with paper texture background and optional watercolor accent.
 
 ```tsx
-<Page withTexture withAccent accentColor="green">
+<Page withAccent accentColor="green">
   {children}
 </Page>
+```
+
+The `texture` prop is shared across textured components (`Page`, `Card`, `Alert`, `Modal`, `Select`, `Table`). It accepts a **name**, a **config**, or a **boolean** to toggle the default:
+
+```tsx
+<Card texture="kraft" />                              {/* named texture */}
+<Card texture={{ texture: 'paper', ruledType: 'lines' }} />  {/* full config */}
+<Page texture={false} />                              {/* disable the default */}
 ```
 
 ### Button

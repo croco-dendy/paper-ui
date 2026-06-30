@@ -120,7 +120,7 @@ export const LayoutPage: FC = () => {
   onNavigate={...}
   navigationIsland={${showIsland ? '<NavigationIsland ... />' : 'undefined'}}
 >
-  <Page withTexture style={{ /* texture styles */ }}>
+  <Page style={{ /* texture styles */ }}>
     Content here
   </Page>
 </Layout>`;
@@ -208,7 +208,6 @@ export const LayoutPage: FC = () => {
                 >
                   {showPage ? (
                     <Page
-                      withTexture
                       style={{
                         ...pageStyles,
                         maxWidth: 'none',

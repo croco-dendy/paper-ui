@@ -1,9 +1,8 @@
 import type { ReactNode } from 'react';
 import { Fragment, useState } from 'react';
 import { createAccentClassMap } from '../../utils/accent-class-map';
-import { getSurfaceTexture } from '../../utils/get-surface-texture';
 import { cn } from '../../utils/style-helpers';
-import type { TextureConfig } from '../../utils/textures';
+import { type TextureProp, resolveTexture } from '../../utils/textures';
 import styles from './table.module.scss';
 
 export type TableSurface = 'paper' | 'chalkboard';
@@ -48,7 +47,7 @@ export interface TableProps<T = unknown> {
   // `expandable` are ignored.
   board?: TableBoardColumn<T>[];
   surface?: 'paper' | 'chalkboard';
-  texture?: TextureConfig;
+  texture?: TextureProp;
   toolbar?: TableToolbar;
   expandable?: TableExpandableConfig<T>;
   showExpandColumn?: boolean;
@@ -63,14 +62,14 @@ export function Table<T = unknown>({
   columns = [],
   board,
   surface = 'paper',
-  texture,
+  texture = true,
   toolbar,
   expandable,
   showExpandColumn = true,
   rowClassName,
   className,
 }: TableProps<T>) {
-  const textureStyles = getSurfaceTexture(surface, texture);
+  const textureStyles = resolveTexture(texture, surface === 'chalkboard' ? 'chalkboard' : 'paper');
   const hasToolbar = !!toolbar;
   const [expandedRows, setExpandedRows] = useState<Set<number>>(new Set());
 

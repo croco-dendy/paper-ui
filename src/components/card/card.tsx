@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { createAccentClassMap } from '../../utils/accent-class-map';
 import { cn } from '../../utils/style-helpers';
-import { type PaperTextureKey, textureColorMap, textureMap } from '../../utils/textures';
+import { type TextureProp, resolveTexture } from '../../utils/textures';
 import styles from './card.module.scss';
 
 export interface CardProps {
@@ -9,7 +9,7 @@ export interface CardProps {
   variant?: 'default' | 'elevated';
   surface?: 'paper' | 'chalkboard';
   size?: 'small' | 'medium';
-  texture?: PaperTextureKey;
+  texture?: TextureProp;
   accent?: boolean;
   accentColor?: 'blue' | 'green' | 'amber' | 'rose' | 'slate';
   className?: string;
@@ -41,16 +41,7 @@ export function Card({
     >
       <div
         className={styles.textureLayer}
-        style={
-          surface === 'chalkboard'
-            ? undefined
-            : {
-                backgroundColor: textureColorMap[texture],
-                backgroundImage: textureMap[texture],
-                backgroundSize: '200px 200px',
-                backgroundRepeat: 'repeat',
-              }
-        }
+        style={surface === 'chalkboard' ? undefined : resolveTexture(texture)}
       >
         {children}
       </div>

@@ -174,10 +174,10 @@ const componentList: Array<{
     description: 'Content wrapper with paper texture and watercolor accent.',
     props: [
       {
-        name: 'withTexture',
-        type: 'boolean',
+        name: 'texture',
+        type: 'boolean | PaperTextureKey | TextureConfig',
         default: 'true',
-        description: 'Show paper grain texture',
+        description: 'Background texture: a name, a config, or false to disable',
       },
       {
         name: 'withAccent',

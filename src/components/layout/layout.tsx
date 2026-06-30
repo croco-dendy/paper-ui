@@ -4,13 +4,7 @@ import type { ReactNode } from 'react';
 import { layoutConfig } from '../../layout';
 import { space } from '../../tokens';
 import { buttonSizeCompact, cn } from '../../utils/style-helpers';
-import {
-  type PaperTextureKey,
-  type RuledColorKey,
-  type RuledType,
-  type TextureConfig,
-  getTextureStyles,
-} from '../../utils/textures';
+import { type Texture, getTextureStyles } from '../../utils/textures';
 import { Button } from '../button';
 import { Page } from '../page';
 import styles from './layout.module.scss';
@@ -22,15 +16,7 @@ export interface NavigationItem {
   icon?: ReactNode;
 }
 
-export type LayoutBackground =
-  | 'plain'
-  | PaperTextureKey
-  | { image: string }
-  | {
-      texture: PaperTextureKey;
-      ruledType?: RuledType;
-      ruledColor?: RuledColorKey;
-    };
+export type LayoutBackground = 'plain' | { image: string } | Texture;
 
 export interface LayoutProps {
   children: ReactNode;
@@ -67,15 +53,7 @@ function getBackgroundStyles(bg: LayoutBackground | undefined): React.CSSPropert
     };
   }
 
-  if (typeof bg === 'object' && 'texture' in bg) {
-    return getTextureStyles({
-      texture: bg.texture,
-      ruledType: bg.ruledType,
-      ruledColor: bg.ruledColor,
-    });
-  }
-
-  return getTextureStyles({ texture: bg });
+  return getTextureStyles(bg);
 }
 
 export function Layout({
@@ -209,7 +187,6 @@ export function Layout({
                 );
               return showPage ? (
                 <Page
-                  withTexture
                   rounded={bleedBottom ? 'top' : 'all'}
                   style={
                     bleedBottom && navigationIsland

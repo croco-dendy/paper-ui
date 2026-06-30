@@ -2,7 +2,7 @@ import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import type { CSSProperties, KeyboardEvent, MouseEvent, ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { cn } from '../../utils/style-helpers';
-import { type TextureConfig, getTextureStyles } from '../../utils/textures';
+import { type TextureProp, resolveTexture } from '../../utils/textures';
 import styles from './select.module.scss';
 
 export interface SelectOption {
@@ -24,8 +24,7 @@ export interface SelectProps {
   onChange?: (value: string) => void;
   disabled?: boolean;
   width?: string | number;
-  texture?: TextureConfig;
-  withTexture?: boolean;
+  texture?: TextureProp;
   className?: string;
 }
 
@@ -42,8 +41,7 @@ export function Select({
   onChange,
   disabled = false,
   width,
-  texture,
-  withTexture = false,
+  texture = false,
   className,
 }: SelectProps) {
   const selectId = useId();
@@ -198,11 +196,7 @@ export function Select({
     };
   }, [isOpen]);
 
-  const textureStyles = texture
-    ? getTextureStyles(texture)
-    : withTexture
-      ? getTextureStyles({ texture: 'paper', ruledType: 'none' })
-      : undefined;
+  const textureStyles = resolveTexture(texture);
 
   const dropdownStyle = textureStyles
     ? ({

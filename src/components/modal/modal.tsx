@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { CloseIcon } from '../../utils/icons';
 import { cn } from '../../utils/style-helpers';
-import { type TextureConfig, getTextureStyles } from '../../utils/textures';
+import { type TextureProp, resolveTexture } from '../../utils/textures';
 import styles from './modal.module.scss';
 
 export interface ModalProps {
@@ -13,8 +13,7 @@ export interface ModalProps {
   children: ReactNode;
   size?: 'small' | 'medium' | 'large';
   surface?: 'paper' | 'chalkboard';
-  texture?: TextureConfig;
-  withTexture?: boolean;
+  texture?: TextureProp;
   className?: string;
 }
 
@@ -28,8 +27,7 @@ export function Modal({
   children,
   size = 'medium',
   surface = 'paper',
-  texture,
-  withTexture = false,
+  texture = false,
   className,
 }: ModalProps) {
   const titleId = useId();
@@ -80,11 +78,7 @@ export function Modal({
 
   if (!open || typeof document === 'undefined') return null;
 
-  const textureStyles = texture
-    ? getTextureStyles(texture)
-    : withTexture
-      ? getTextureStyles({ texture: 'paper', ruledType: 'none' })
-      : undefined;
+  const textureStyles = resolveTexture(texture);
 
   return createPortal(
     <div className={styles.overlay}>

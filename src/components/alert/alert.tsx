@@ -1,14 +1,14 @@
 import type { ReactNode } from 'react';
 import { CloseIcon } from '../../utils/icons';
 import { cn } from '../../utils/style-helpers';
-import { type PaperTextureKey, textureColorMap, textureMap } from '../../utils/textures';
+import { type TextureProp, resolveTexture } from '../../utils/textures';
 import styles from './alert.module.scss';
 
 export interface AlertProps {
   children: ReactNode;
   variant?: 'info' | 'success' | 'warning' | 'error';
   surface?: 'paper' | 'chalkboard';
-  texture?: PaperTextureKey;
+  texture?: TextureProp;
   title?: string;
   dismissible?: boolean;
   onDismiss?: () => void;
@@ -30,12 +30,7 @@ export function Alert({
   return (
     <div
       className={cn(styles.alert, styles[variant], isChalkboard && styles.chalkboard, className)}
-      style={{
-        backgroundColor: isChalkboard ? undefined : textureColorMap[texture],
-        backgroundImage: isChalkboard ? undefined : textureMap[texture],
-        backgroundRepeat: 'repeat',
-        backgroundSize: '200px 200px',
-      }}
+      style={isChalkboard ? undefined : resolveTexture(texture)}
       role="alert"
     >
       <div className={styles.tint} />
