@@ -59,9 +59,10 @@ export type {
   TableProps,
   TableColumn,
   TableToolbar,
+  TableExpandableConfig,
   TableBoardColumn,
   TableAccentColor,
-  TableVariant,
+  TableSurface,
 } from './components/table';
 
 export { Textarea } from './components/textarea';
@@ -81,7 +82,15 @@ export type { IconProps } from './components/icon';
 
 export { CloseIcon, LightbulbIcon, CheckIcon, CopyIcon, PlusIcon, FolderIcon } from './utils/icons';
 
+export { getTextureStyles, resolveTexture } from './utils/textures';
+export type {
+  Texture,
+  TextureProp,
+  TextureConfig,
+  PaperTextureKey,
+  RuledType,
+  RuledColorKey,
+} from './utils/textures';
+
 export { space } from './tokens';
 export { layoutConfig } from './layout';
-
-

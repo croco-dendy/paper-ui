@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
+import { buttonSizeCompact, cn } from '../../utils/style-helpers';
 import { Button } from '../button';
-import { cn, buttonSizeCompact } from '../../utils/style-helpers';
 import styles from './navigation-island.module.scss';
 
 export interface NavigationIslandItem {
@@ -14,7 +14,7 @@ export interface NavigationIslandProps {
   activeId?: string;
   onSelect?: (id: string) => void;
   position?: 'top' | 'bottom';
-  variant?: 'default' | 'chalkboard';
+  surface?: 'paper' | 'chalkboard';
 }
 
 export function NavigationIsland({
@@ -22,14 +22,14 @@ export function NavigationIsland({
   activeId,
   onSelect,
   position = 'bottom',
-  variant = 'default',
+  surface = 'paper',
 }: NavigationIslandProps) {
   return (
     <nav
       className={cn(
         styles.island,
         position === 'bottom' ? styles.positionBottom : styles.positionRelative,
-        variant === 'chalkboard' && styles.chalkboard,
+        surface === 'chalkboard' && styles.chalkboard,
       )}
       aria-label="Navigation island"
     >
@@ -39,6 +39,7 @@ export function NavigationIsland({
           <Button
             key={item.id}
             variant="ghost"
+            surface={surface}
             size="small"
             isActive={isActive}
             onClick={() => onSelect?.(item.id)}

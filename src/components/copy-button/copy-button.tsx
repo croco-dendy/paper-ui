@@ -1,16 +1,18 @@
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import type { ButtonHTMLAttributes } from 'react';
 import { cn } from '../../utils/style-helpers';
 import styles from './copy-button.module.scss';
 
 export interface CopyButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
-  variant?: 'light' | 'dark' | 'chalkboard';
+  variant?: 'light' | 'dark';
+  surface?: 'paper' | 'chalkboard';
 }
 
 export function CopyButton({
   text,
   variant = 'light',
+  surface = 'paper',
   className,
   ...props
 }: CopyButtonProps) {
@@ -33,7 +35,7 @@ export function CopyButton({
       className={cn(
         styles.copyButton,
         variant === 'dark' && styles.dark,
-        variant === 'chalkboard' && styles.chalkboard,
+        surface === 'chalkboard' && styles.chalkboard,
         copied && styles.copied,
         className,
       )}

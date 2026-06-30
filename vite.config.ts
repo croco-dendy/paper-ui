@@ -47,8 +47,20 @@ export default defineConfig(({ command }) => {
         formats: ['es', 'cjs'],
       },
       rollupOptions: {
-        external: ['react', 'react-dom', 'clsx', 'tailwind-merge'],
+        external: [
+          'react',
+          'react-dom',
+          'react/jsx-runtime',
+          'clsx',
+          'tailwind-merge',
+          'framer-motion',
+        ],
         output: {
+          // The library is almost entirely interactive (hooks, state, event
+          // handlers), so the whole bundle is marked as a Client Component.
+          // This lets Next.js App Router consumers import it from Server
+          // Components without per-import "use client" directives.
+          banner: "'use client';",
           globals: {
             react: 'React',
             'react-dom': 'ReactDOM',

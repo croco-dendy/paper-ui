@@ -6,14 +6,20 @@ export interface TableCellInputProps {
   value: string;
   placeholder?: string;
   onChange: (value: string) => void;
-  variant?: 'default' | 'chalkboard';
+  surface?: 'paper' | 'chalkboard';
 }
 
-export function TableCellInput({ kind, value, placeholder, onChange, variant = 'default' }: TableCellInputProps) {
+export function TableCellInput({
+  kind,
+  value,
+  placeholder,
+  onChange,
+  surface = 'paper',
+}: TableCellInputProps) {
   return (
     <input
       type={kind === 'number' ? 'number' : 'text'}
-      className={cn(styles.input, variant === 'chalkboard' && styles.chalkInput)}
+      className={cn(styles.input, surface === 'chalkboard' && styles.chalkInput)}
       value={value}
       placeholder={placeholder}
       onChange={(e) => onChange(e.target.value)}

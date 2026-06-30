@@ -16,7 +16,7 @@
 ## Features
 
 - **Natural Materials** — Textured paper backgrounds, ink borders, canvas weaves, watercolor washes
-- **6 MVP Components** — Layout, Page, Button, Checkbox, IconButton, NavigationIsland
+- **24 Components** — Layout primitives, form controls, data display, and feedback (see [Components](#components))
 - **Tailwind CSS Preset** — `paperPreset` with warm color tokens (paper, ink, canvas, watercolor)
 - **6 Paper Textures** — SVG-generated grain: paper, parchment, kraft, marble, speckle, canvas
 - **Ruled Overlays** — Notebook lines and grid patterns in blue, brown, or black
@@ -76,7 +76,7 @@ function App() {
         { id: 'plans', label: 'Plans', path: '/plans' },
       ]}
     >
-      <Page withTexture>
+      <Page>
         <Button variant="primary" size="medium">
           Create Plan
         </Button>
@@ -89,6 +89,25 @@ function App() {
 ```
 
 ## Components
+
+The library exports 24 components. The core layout and form primitives are documented below; the full set is:
+
+| Category | Components |
+|----------|-----------|
+| **Layout** | `Layout`, `Page`, `Island`, `NavigationIsland`, `Card` |
+| **Forms** | `Button`, `IconButton`, `Checkbox`, `Input`, `Textarea`, `Select`, `Tabs` |
+| **Data display** | `Table`, `ListItem`, `Accordion`, `PropTable`, `Swatch`, `Stamp`, `Icon` |
+| **Feedback** | `Alert`, `Modal`, `Progress` |
+| **Code** | `CodeBlock`, `CopyButton` |
+
+All components are named exports with a matching `{Component}Props` type.
+
+Components that support the dark "chalkboard" theme accept a `surface` prop (`'paper' | 'chalkboard'`, default `'paper'`), kept separate from each component's semantic `variant`:
+
+```tsx
+<Button variant="primary" surface="chalkboard">Save</Button>
+<Input label="Name" surface="chalkboard" />
+```
 
 ### Layout
 
@@ -116,9 +135,17 @@ Page shell with configurable sidebar, header, footer, and content area.
 Content wrapper with paper texture background and optional watercolor accent.
 
 ```tsx
-<Page withTexture withAccent accentColor="green">
+<Page withAccent accentColor="green">
   {children}
 </Page>
+```
+
+The `texture` prop is shared across textured components (`Page`, `Card`, `Alert`, `Modal`, `Select`, `Table`). It accepts a **name**, a **config**, or a **boolean** to toggle the default:
+
+```tsx
+<Card texture="kraft" />                              {/* named texture */}
+<Card texture={{ texture: 'paper', ruledType: 'lines' }} />  {/* full config */}
+<Page texture={false} />                              {/* disable the default */}
 ```
 
 ### Button
@@ -208,6 +235,10 @@ pnpm run build
 
 # Type check
 pnpm run check-types
+
+# Lint and format (Biome)
+pnpm run lint
+pnpm run lint:fix
 ```
 
 ## License

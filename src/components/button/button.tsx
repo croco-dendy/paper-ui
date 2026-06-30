@@ -1,10 +1,11 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
-import { cn } from '../../utils/style-helpers';
 import { useBlobPaths } from '../../hooks/use-blob-paths';
+import { cn } from '../../utils/style-helpers';
 import styles from './button.module.scss';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'chalkboard';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
+  surface?: 'paper' | 'chalkboard';
   size?: 'small' | 'medium' | 'large';
   icon?: ReactNode;
   iconRight?: ReactNode;
@@ -15,6 +16,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export function Button({
   variant = 'primary',
+  surface = 'paper',
   size = 'medium',
   icon,
   iconRight,
@@ -34,7 +36,7 @@ export function Button({
         styles.button,
         styles[variant],
         styles[size],
-        variant === 'chalkboard' && styles.chalkboard,
+        surface === 'chalkboard' && styles.chalkboard,
         isActive && styles.isActive,
         fullWidth && styles.fullWidth,
         className,

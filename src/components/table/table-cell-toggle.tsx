@@ -4,18 +4,18 @@ import styles from './cells.module.scss';
 export interface TableCellToggleProps {
   checked: boolean;
   onChange: (checked: boolean) => void;
-  variant?: 'default' | 'chalkboard';
+  surface?: 'paper' | 'chalkboard';
 }
 
-export function TableCellToggle({ checked, onChange, variant = 'default' }: TableCellToggleProps) {
+export function TableCellToggle({ checked, onChange, surface = 'paper' }: TableCellToggleProps) {
   return (
     <button
       type="button"
       className={cn(
         styles.toggle,
-        variant === 'chalkboard' && styles.chalkToggle,
+        surface === 'chalkboard' && styles.chalkToggle,
         checked && styles.toggleActive,
-        checked && variant === 'chalkboard' && styles.chalkToggleActive,
+        checked && surface === 'chalkboard' && styles.chalkToggleActive,
       )}
       onClick={() => onChange(!checked)}
     >

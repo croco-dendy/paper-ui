@@ -1,14 +1,14 @@
+import { useId } from 'react';
 import type { TextareaHTMLAttributes } from 'react';
 import { cn } from '../../utils/style-helpers';
 import styles from './textarea.module.scss';
 
-export interface TextareaProps
-  extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'size'> {
+export interface TextareaProps extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'size'> {
   label?: string;
   helperText?: string;
   error?: boolean;
   size?: 'small' | 'medium' | 'large';
-  variant?: 'default' | 'chalkboard';
+  surface?: 'paper' | 'chalkboard';
   className?: string;
 }
 
@@ -17,15 +17,16 @@ export function Textarea({
   helperText,
   error = false,
   size = 'medium',
-  variant = 'default',
+  surface = 'paper',
   className,
   id,
   ...props
 }: TextareaProps) {
-  const textareaId = id ?? `textarea-${Math.random().toString(36).slice(2, 9)}`;
+  const generatedId = useId();
+  const textareaId = id ?? generatedId;
 
   return (
-    <div className={cn(styles.wrapper, variant === 'chalkboard' && styles.chalkboard, className)}>
+    <div className={cn(styles.wrapper, surface === 'chalkboard' && styles.chalkboard, className)}>
       {label && (
         <label htmlFor={textareaId} className={styles.label}>
           {label}
@@ -33,17 +34,11 @@ export function Textarea({
       )}
       <textarea
         id={textareaId}
-        className={cn(
-          styles.textarea,
-          styles[size],
-          error && styles.error,
-        )}
+        className={cn(styles.textarea, styles[size], error && styles.error)}
         {...props}
       />
       {helperText && (
-        <span className={cn(styles.helperText, error && styles.helperError)}>
-          {helperText}
-        </span>
+        <span className={cn(styles.helperText, error && styles.helperError)}>{helperText}</span>
       )}
     </div>
   );

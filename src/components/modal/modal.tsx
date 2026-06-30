@@ -1,7 +1,10 @@
+import { useEffect, useId, useRef } from 'react';
 import type { ReactNode } from 'react';
-import { cn } from '../../utils/style-helpers';
+import { createPortal } from 'react-dom';
+import { useEscapeKey } from '../../hooks/use-escape-key';
 import { CloseIcon } from '../../utils/icons';
-import { getTextureStyles, type TextureConfig } from '../../utils/textures';
+import { cn } from '../../utils/style-helpers';
+import { type TextureProp, resolveTexture } from '../../utils/textures';
 import styles from './modal.module.scss';
 
 export interface ModalProps {
@@ -10,11 +13,13 @@ export interface ModalProps {
   title?: string;
   children: ReactNode;
   size?: 'small' | 'medium' | 'large';
-  variant?: 'default' | 'chalkboard';
-  texture?: TextureConfig;
-  withTexture?: boolean;
+  surface?: 'paper' | 'chalkboard';
+  texture?: TextureProp;
   className?: string;
 }
+
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 export function Modal({
   open,
@@ -22,45 +27,92 @@ export function Modal({
   title,
   children,
   size = 'medium',
-  variant = 'default',
-  texture,
-  withTexture = false,
+  surface = 'paper',
+  texture = false,
   className,
 }: ModalProps) {
-  if (!open) return null;
+  const titleId = useId();
+  const panelRef = useRef<HTMLDivElement>(null);
+  const previouslyFocused = useRef<HTMLElement | null>(null);
 
-  const textureStyles = texture
-    ? getTextureStyles(texture)
-    : withTexture
-      ? getTextureStyles({ texture: 'paper', ruledType: 'none' })
-      : undefined;
+  useEscapeKey(open, onClose);
 
-  return (
-    <div className={styles.overlay} onClick={onClose} role="dialog" aria-modal="true">
+  useEffect(() => {
+    if (!open) return;
+
+    previouslyFocused.current = document.activeElement as HTMLElement | null;
+    panelRef.current?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Tab') return;
+
+      const focusables = panelRef.current?.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
+      if (!focusables || focusables.length === 0) {
+        event.preventDefault();
+        return;
+      }
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+      previouslyFocused.current?.focus?.();
+    };
+  }, [open]);
+
+  if (!open || typeof document === 'undefined') return null;
+
+  const textureStyles = resolveTexture(texture);
+
+  return createPortal(
+    <div className={styles.overlay}>
+      <button
+        type="button"
+        className={styles.backdrop}
+        aria-label="Close modal"
+        onClick={onClose}
+      />
       <div
+        ref={panelRef}
         className={cn(
           styles.modal,
           styles[size],
-          variant === 'chalkboard' && styles.chalkboard,
+          surface === 'chalkboard' && styles.chalkboard,
           className,
         )}
         style={textureStyles}
-        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={title ? titleId : undefined}
+        tabIndex={-1}
       >
         <div className={styles.header}>
-          {title && <h2 className={styles.title}>{title}</h2>}
-          <button
-            type="button"
-            className={styles.close}
-            onClick={onClose}
-            aria-label="Close modal"
-          >
+          {title && (
+            <h2 id={titleId} className={styles.title}>
+              {title}
+            </h2>
+          )}
+          <button type="button" className={styles.close} onClick={onClose} aria-label="Close modal">
             <CloseIcon size={18} />
           </button>
         </div>
         <div className={styles.body}>{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
-

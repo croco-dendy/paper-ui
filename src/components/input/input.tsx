@@ -1,14 +1,14 @@
+import { useId } from 'react';
 import type { InputHTMLAttributes } from 'react';
 import { cn } from '../../utils/style-helpers';
 import styles from './input.module.scss';
 
-export interface InputProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
+export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
   label?: string;
   helperText?: string;
   error?: boolean;
   size?: 'small' | 'medium' | 'large';
-  variant?: 'default' | 'chalkboard';
+  surface?: 'paper' | 'chalkboard';
   className?: string;
 }
 
@@ -17,15 +17,16 @@ export function Input({
   helperText,
   error = false,
   size = 'medium',
-  variant = 'default',
+  surface = 'paper',
   className,
   id,
   ...props
 }: InputProps) {
-  const inputId = id ?? `input-${Math.random().toString(36).slice(2, 9)}`;
+  const generatedId = useId();
+  const inputId = id ?? generatedId;
 
   return (
-    <div className={cn(styles.wrapper, variant === 'chalkboard' && styles.chalkboard, className)}>
+    <div className={cn(styles.wrapper, surface === 'chalkboard' && styles.chalkboard, className)}>
       {label && (
         <label htmlFor={inputId} className={styles.label}>
           {label}
@@ -33,17 +34,11 @@ export function Input({
       )}
       <input
         id={inputId}
-        className={cn(
-          styles.input,
-          styles[size],
-          error && styles.error,
-        )}
+        className={cn(styles.input, styles[size], error && styles.error)}
         {...props}
       />
       {helperText && (
-        <span className={cn(styles.helperText, error && styles.helperError)}>
-          {helperText}
-        </span>
+        <span className={cn(styles.helperText, error && styles.helperError)}>{helperText}</span>
       )}
     </div>
   );

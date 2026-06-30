@@ -1,11 +1,12 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
-import { cn } from '../../utils/style-helpers';
 import { useBlobPaths } from '../../hooks/use-blob-paths';
+import { cn } from '../../utils/style-helpers';
 import styles from './icon-button.module.scss';
 
 export interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon: ReactNode;
-  variant?: 'default' | 'ghost' | 'danger' | 'chalkboard';
+  variant?: 'default' | 'ghost' | 'danger';
+  surface?: 'paper' | 'chalkboard';
   size?: 'small' | 'medium' | 'large';
   label?: string;
   wobble?: number;
@@ -15,6 +16,7 @@ export interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>
 export function IconButton({
   icon,
   variant = 'default',
+  surface = 'paper',
   size = 'medium',
   label,
   wobble = 0.5,
@@ -30,7 +32,7 @@ export function IconButton({
       className={cn(
         styles.iconButton,
         styles[variant],
-        variant === 'chalkboard' && styles.chalkboard,
+        surface === 'chalkboard' && styles.chalkboard,
         styles[size],
         isActive && styles.isActive,
         className,

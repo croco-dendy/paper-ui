@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import type { InputHTMLAttributes } from 'react';
-import { cn } from '../../utils/style-helpers';
 import { useBlobPaths } from '../../hooks/use-blob-paths';
+import { cn } from '../../utils/style-helpers';
 import styles from './checkbox.module.scss';
 
 export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
@@ -9,7 +9,7 @@ export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement
   labelPosition?: 'left' | 'right';
   indeterminate?: boolean;
   wobble?: number;
-  variant?: 'default' | 'chalkboard';
+  surface?: 'paper' | 'chalkboard';
 }
 
 export function Checkbox({
@@ -17,13 +17,15 @@ export function Checkbox({
   labelPosition = 'right',
   indeterminate = false,
   wobble = 0.4,
-  variant = 'default',
+  surface = 'paper',
   className,
   checked,
   onChange,
+  id: idProp,
   ...props
 }: CheckboxProps) {
-  const id = useId();
+  const generatedId = useId();
+  const id = idProp ?? generatedId;
   const paths = useBlobPaths(wobble);
 
   return (
@@ -31,7 +33,7 @@ export function Checkbox({
       className={cn(
         styles.wrapper,
         labelPosition === 'left' && styles.labelLeft,
-        variant === 'chalkboard' && styles.chalkboard,
+        surface === 'chalkboard' && styles.chalkboard,
         className,
       )}
       htmlFor={id}
@@ -56,7 +58,16 @@ export function Checkbox({
         <span className={styles.box} aria-hidden="true">
           {indeterminate ? (
             <svg viewBox="0 0 20 20" fill="none" className={styles.icon}>
-              <line x1="4" y1="10" x2="16" y2="10" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className={styles.indeterminateLine} />
+              <line
+                x1="4"
+                y1="10"
+                x2="16"
+                y2="10"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                className={styles.indeterminateLine}
+              />
             </svg>
           ) : (
             <svg viewBox="0 0 20 20" fill="none" className={styles.icon}>

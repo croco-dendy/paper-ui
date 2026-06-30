@@ -3,6 +3,7 @@
   "version": "0.2.0",
   "description": "Natural-material React component library — paper, ink, canvas, and watercolor",
   "type": "module",
+  "packageManager": "pnpm@10.12.1",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -42,20 +43,16 @@
     "check-types": "tsc --noEmit",
     "lint": "biome check ./src",
     "lint:fix": "biome check ./src --write",
-    "ci": "pnpm run check-types && pnpm run build && pnpm run test",
-    "version": "changeset version",
-    "release": "pnpm run ci && pnpm publish --access public",
-    "publish:jsr": "pnpm dlx jsr publish",
-    "publish:jsr:dry": "pnpm dlx jsr publish --dry-run"
+    "ci": "pnpm run check-types && pnpm run build && pnpm run test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/croco-dendy/paper-ui.git"
+    "url": "git+https://github.com/adooone/paper-ui.git"
   },
   "bugs": {
-    "url": "https://github.com/croco-dendy/paper-ui/issues"
+    "url": "https://github.com/adooone/paper-ui/issues"
   },
-  "homepage": "https://github.com/croco-dendy/paper-ui#readme",
+  "homepage": "https://github.com/adooone/paper-ui#readme",
   "keywords": [
     "react",
     "components",
@@ -78,8 +75,9 @@
     "tailwind-merge": "^2.6.0"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "^0.6.0",
-    "@changesets/cli": "^2.31.0",
+    "@biomejs/biome": "^1.9.4",
+    "@commitlint/cli": "^21.0.2",
+    "@commitlint/config-conventional": "^21.0.2",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "@vitejs/plugin-react-swc": "3.7.1",
@@ -90,5 +88,8 @@
     "typescript": "^5.0.0",
     "vite": "5.4.9",
     "vite-plugin-dts": "^4.5.4"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["@biomejs/biome"]
   }
 }

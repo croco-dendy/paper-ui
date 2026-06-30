@@ -4,22 +4,19 @@ import styles from './island.module.scss';
 
 export interface IslandProps {
   children: ReactNode;
-  variant?: 'default' | 'chalkboard';
+  surface?: 'paper' | 'chalkboard';
+  /** Accessible name for the landmark. When omitted, the island is a plain container, not a labelled region. */
+  label?: string;
   className?: string;
 }
 
-export function Island({
-  children,
-  variant = 'default',
-  className,
-}: IslandProps) {
+export function Island({ children, surface = 'paper', label, className }: IslandProps) {
   return (
-    <div
-      className={cn(styles.island, variant === 'chalkboard' && styles.chalkboard, className)}
-      role="region"
-      aria-label="Controls"
+    <section
+      className={cn(styles.island, surface === 'chalkboard' && styles.chalkboard, className)}
+      aria-label={label}
     >
       {children}
-    </div>
+    </section>
   );
 }

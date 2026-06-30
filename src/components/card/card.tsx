@@ -1,14 +1,15 @@
 import type { ReactNode } from 'react';
-import { cn } from '../../utils/style-helpers';
 import { createAccentClassMap } from '../../utils/accent-class-map';
-import { textureMap, textureColorMap, type PaperTextureKey } from '../../utils/textures';
+import { cn } from '../../utils/style-helpers';
+import { type TextureProp, resolveTexture } from '../../utils/textures';
 import styles from './card.module.scss';
 
 export interface CardProps {
   children: ReactNode;
-  variant?: 'default' | 'elevated' | 'chalkboard';
-  size?: 'default' | 'small';
-  texture?: PaperTextureKey;
+  variant?: 'default' | 'elevated';
+  surface?: 'paper' | 'chalkboard';
+  size?: 'small' | 'medium';
+  texture?: TextureProp;
   accent?: boolean;
   accentColor?: 'blue' | 'green' | 'amber' | 'rose' | 'slate';
   className?: string;
@@ -19,7 +20,8 @@ const accentClassMap = createAccentClassMap(styles);
 export function Card({
   children,
   variant = 'default',
-  size = 'default',
+  surface = 'paper',
+  size = 'medium',
   texture = 'parchment',
   accent = false,
   accentColor = 'blue',
@@ -30,6 +32,7 @@ export function Card({
       className={cn(
         styles.borderLayer,
         styles[variant],
+        surface === 'chalkboard' && styles.chalkboard,
         styles[size],
         accent && styles.withAccent,
         accent && accentClassMap[accentColor],
@@ -38,12 +41,7 @@ export function Card({
     >
       <div
         className={styles.textureLayer}
-        style={variant === 'chalkboard' ? undefined : {
-          backgroundColor: textureColorMap[texture],
-          backgroundImage: textureMap[texture],
-          backgroundSize: '200px 200px',
-          backgroundRepeat: 'repeat',
-        }}
+        style={surface === 'chalkboard' ? undefined : resolveTexture(texture)}
       >
         {children}
       </div>

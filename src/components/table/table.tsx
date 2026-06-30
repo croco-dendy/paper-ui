@@ -1,18 +1,17 @@
 import type { ReactNode } from 'react';
 import { Fragment, useState } from 'react';
-import { cn } from '../../utils/style-helpers';
 import { createAccentClassMap } from '../../utils/accent-class-map';
-import { getVariantTexture } from '../../utils/get-variant-texture';
-import type { TextureConfig } from '../../utils/textures';
+import { cn } from '../../utils/style-helpers';
+import { type TextureProp, resolveTexture } from '../../utils/textures';
 import styles from './table.module.scss';
 
-export type TableVariant = 'paper' | 'chalkboard';
+export type TableSurface = 'paper' | 'chalkboard';
 export type TableAccentColor = 'blue' | 'green' | 'amber' | 'rose' | 'slate';
 
 export interface TableColumn<T = unknown> {
   key: string;
   header: ReactNode;
-  cell: (row: T, index: number, variant: TableVariant) => ReactNode;
+  cell: (row: T, index: number, surface: TableSurface) => ReactNode;
   width?: number;
 }
 
@@ -22,11 +21,11 @@ export interface TableToolbar {
     value?: string;
     onChange?: (value: string) => void;
   };
-  actions?: ReactNode | ((variant: TableVariant) => ReactNode);
+  actions?: ReactNode | ((surface: TableSurface) => ReactNode);
 }
 
 export interface TableExpandableConfig<T = unknown> {
-  render: (row: T, index: number, variant: TableVariant) => ReactNode;
+  render: (row: T, index: number, surface: TableSurface) => ReactNode;
 }
 
 // A board column is a lane of cards (e.g. a status), rendered side by side
@@ -37,7 +36,7 @@ export interface TableBoardColumn<T = unknown> {
   accent?: TableAccentColor;
   items: T[];
   getKey?: (item: T, index: number) => string | number;
-  renderItem: (item: T, index: number, variant: TableVariant) => ReactNode;
+  renderItem: (item: T, index: number, surface: TableSurface) => ReactNode;
   emptyLabel?: ReactNode;
 }
 
@@ -47,8 +46,8 @@ export interface TableProps<T = unknown> {
   // When set, renders lanes of cards instead of the rows layout; `data`/`columns`/
   // `expandable` are ignored.
   board?: TableBoardColumn<T>[];
-  variant?: 'paper' | 'chalkboard';
-  texture?: TextureConfig;
+  surface?: 'paper' | 'chalkboard';
+  texture?: TextureProp;
   toolbar?: TableToolbar;
   expandable?: TableExpandableConfig<T>;
   showExpandColumn?: boolean;
@@ -62,15 +61,15 @@ export function Table<T = unknown>({
   data = [],
   columns = [],
   board,
-  variant = 'paper',
-  texture,
+  surface = 'paper',
+  texture = true,
   toolbar,
   expandable,
   showExpandColumn = true,
   rowClassName,
   className,
 }: TableProps<T>) {
-  const textureStyles = getVariantTexture(variant, texture);
+  const textureStyles = resolveTexture(texture, surface === 'chalkboard' ? 'chalkboard' : 'paper');
   const hasToolbar = !!toolbar;
   const [expandedRows, setExpandedRows] = useState<Set<number>>(new Set());
 
@@ -91,7 +90,11 @@ export function Table<T = unknown>({
 
   return (
     <div
-      className={cn(styles.tableWrapper, variant === 'chalkboard' && styles.chalkboardWrapper, className)}
+      className={cn(
+        styles.tableWrapper,
+        surface === 'chalkboard' && styles.chalkboardWrapper,
+        className,
+      )}
       style={textureStyles}
     >
       {hasToolbar && (
@@ -110,7 +113,7 @@ export function Table<T = unknown>({
           )}
           {toolbar.actions && (
             <div className={styles.toolbarActions}>
-              {typeof toolbar.actions === 'function' ? toolbar.actions(variant) : toolbar.actions}
+              {typeof toolbar.actions === 'function' ? toolbar.actions(surface) : toolbar.actions}
             </div>
           )}
         </div>
@@ -124,7 +127,7 @@ export function Table<T = unknown>({
                 <div
                   className={cn(
                     styles.boardColumnHeader,
-                    variant === 'chalkboard' && styles.chalkboard,
+                    surface === 'chalkboard' && styles.chalkboard,
                     col.accent && accentClassMap[col.accent],
                   )}
                 >
@@ -138,9 +141,12 @@ export function Table<T = unknown>({
                     col.items.map((item, itemIndex) => (
                       <div
                         key={col.getKey ? col.getKey(item, itemIndex) : itemIndex}
-                        className={cn(styles.boardRow, variant === 'chalkboard' && styles.chalkboard)}
+                        className={cn(
+                          styles.boardRow,
+                          surface === 'chalkboard' && styles.chalkboard,
+                        )}
                       >
-                        {col.renderItem(item, itemIndex, variant)}
+                        {col.renderItem(item, itemIndex, surface)}
                       </div>
                     ))
                   )}
@@ -151,7 +157,7 @@ export function Table<T = unknown>({
         </div>
       ) : (
         <div className={styles.tableScroll}>
-          <table className={cn(styles.table, variant === 'chalkboard' && styles.chalkboard)}>
+          <table className={cn(styles.table, surface === 'chalkboard' && styles.chalkboard)}>
             <colgroup>
               {hasExpandColumn && <col style={{ width: '48px' }} />}
               {columns.map((col) => (
@@ -163,7 +169,9 @@ export function Table<T = unknown>({
             </colgroup>
             <thead>
               <tr>
-                {hasExpandColumn && <th className={cn(styles.th, styles.expandTh)} aria-label="Expand" />}
+                {hasExpandColumn && (
+                  <th className={cn(styles.th, styles.expandTh)} aria-label="Expand" />
+                )}
                 {columns.map((col) => (
                   <th key={col.key} className={styles.th}>
                     {col.header}
@@ -173,11 +181,12 @@ export function Table<T = unknown>({
             </thead>
             <tbody>
               {data.map((row, rowIndex) => {
-                const expansionContent = expandable?.render(row, rowIndex, variant);
+                const expansionContent = expandable?.render(row, rowIndex, surface);
                 const canExpand = !!expansionContent;
                 const isExpanded = canExpand && expandedRows.has(rowIndex);
                 return (
                   <Fragment key={rowIndex}>
+                    {/* biome-ignore lint/a11y/useKeyWithClickEvents: row click is a pointer-only convenience; keyboard users toggle expansion via the dedicated expand button in the first cell. */}
                     <tr
                       className={cn(
                         styles.tr,
@@ -189,15 +198,24 @@ export function Table<T = unknown>({
                       {hasExpandColumn && (
                         <td className={cn(styles.td, styles.expandTd)}>
                           {canExpand && (
-                            <span className={styles.expandIcon} aria-hidden="true">
+                            <button
+                              type="button"
+                              className={styles.expandIcon}
+                              aria-expanded={isExpanded}
+                              aria-label={isExpanded ? 'Collapse row' : 'Expand row'}
+                              onClick={(event) => {
+                                event.stopPropagation();
+                                toggleRow(rowIndex);
+                              }}
+                            >
                               {isExpanded ? '▼' : '▶'}
-                            </span>
+                            </button>
                           )}
                         </td>
                       )}
                       {columns.map((col) => (
                         <td key={col.key} className={styles.td}>
-                          {col.cell(row, rowIndex, variant)}
+                          {col.cell(row, rowIndex, surface)}
                         </td>
                       ))}
                     </tr>
