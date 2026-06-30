@@ -43,8 +43,6 @@
     "lint": "biome check ./src",
     "lint:fix": "biome check ./src --write",
     "ci": "pnpm run check-types && pnpm run build && pnpm run test",
-    "version": "changeset version",
-    "release": "pnpm run ci && pnpm publish --access public",
     "publish:jsr": "pnpm dlx jsr publish",
     "publish:jsr:dry": "pnpm dlx jsr publish --dry-run"
   },
@@ -79,8 +77,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@changesets/changelog-github": "^0.6.0",
-    "@changesets/cli": "^2.31.0",
+    "@commitlint/cli": "^21.0.2",
+    "@commitlint/config-conventional": "^21.0.2",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "@vitejs/plugin-react-swc": "3.7.1",
