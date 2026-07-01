@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { FC } from 'react';
+import { Accordion } from '../../components/accordion';
 import { Alert } from '../../components/alert';
 import { Avatar } from '../../components/avatar';
 import { Badge } from '../../components/badge';
@@ -15,6 +16,7 @@ import { Layout } from '../../components/layout';
 import { ListItem } from '../../components/list-item';
 import { Menu } from '../../components/menu';
 import { Modal } from '../../components/modal';
+import { NavigationIsland } from '../../components/navigation-island';
 import { Page } from '../../components/page';
 import { Progress } from '../../components/progress';
 import type { PropDef } from '../../components/prop-table';
@@ -243,6 +245,12 @@ const sectionDetails: SectionDetail[] = [
         default: '0.4',
         description: 'Blob shape wobble intensity',
       },
+      {
+        name: 'surface',
+        type: "'paper' | 'chalkboard'",
+        default: "'paper'",
+        description: 'Surface style',
+      },
       disabledProp,
     ],
   },
@@ -286,6 +294,12 @@ const sectionDetails: SectionDetail[] = [
         default: "'medium'",
         description: 'Input size',
       },
+      {
+        name: 'surface',
+        type: "'paper' | 'chalkboard'",
+        default: "'paper'",
+        description: 'Surface style',
+      },
       disabledProp,
     ],
   },
@@ -301,7 +315,7 @@ const sectionDetails: SectionDetail[] = [
     { value: 'canvas', label: 'Canvas' },
   ]}
   value={value}
-  onChange={(e) => setValue(e.target.value)}
+  onChange={setValue}
 />`,
     props: [
       {
@@ -313,12 +327,27 @@ const sectionDetails: SectionDetail[] = [
         name: 'options',
         type: 'SelectOption[]',
         required: true,
-        description: 'Dropdown options',
+        description: 'Dropdown options ({ value, label, disabled? })',
       },
       {
         name: 'placeholder',
         type: 'string',
         description: 'Placeholder option text',
+      },
+      {
+        name: 'value',
+        type: 'string',
+        description: 'Selected value (controlled)',
+      },
+      {
+        name: 'defaultValue',
+        type: 'string',
+        description: 'Initial value (uncontrolled)',
+      },
+      {
+        name: 'onChange',
+        type: '(value: string) => void',
+        description: 'Called with the newly selected value',
       },
       {
         name: 'helperText',
@@ -338,10 +367,23 @@ const sectionDetails: SectionDetail[] = [
         description: 'Select size',
       },
       {
+        name: 'surface',
+        type: "'paper' | 'chalkboard'",
+        default: "'paper'",
+        description: 'Surface style',
+      },
+      {
+        name: 'texture',
+        type: 'boolean | PaperTextureKey | TextureConfig',
+        default: 'false',
+        description: 'Dropdown background texture: a name, a config, or false to disable',
+      },
+      {
         name: 'width',
         type: 'string | number',
         description: 'Fixed width (e.g., 200 or "10rem"). Full width if omitted.',
       },
+      disabledProp,
     ],
   },
   {
@@ -422,6 +464,21 @@ const sectionDetails: SectionDetail[] = [
         name: 'headerActions',
         type: 'ReactNode',
         description: 'Header action elements',
+      },
+      {
+        name: 'logo',
+        type: 'ReactNode',
+        description: 'Custom logo element, replacing the default title/subtitle mark',
+      },
+      {
+        name: 'footerContent',
+        type: 'ReactNode',
+        description: 'Custom footer content, shown when showFooter is true',
+      },
+      {
+        name: 'navigationIsland',
+        type: 'ReactNode',
+        description: 'Floating element (typically a NavigationIsland) anchored to the layout',
       },
     ],
   },
@@ -544,10 +601,31 @@ const sectionDetails: SectionDetail[] = [
         type: 'TableToolbar',
         description: 'Search and action bar config',
       },
+      {
+        name: 'board',
+        type: 'TableBoardColumn<T>[]',
+        description: 'Renders a Kanban-style board of card lanes instead of rows, when set',
+      },
+      {
+        name: 'expandable',
+        type: 'TableExpandableConfig<T>',
+        description: 'Renders an expand toggle per row with custom detail content',
+      },
+      {
+        name: 'showExpandColumn',
+        type: 'boolean',
+        default: 'true',
+        description: 'Show the expand-toggle column when expandable is set',
+      },
+      {
+        name: 'rowClassName',
+        type: '(row: T, index: number) => string | undefined',
+        description: 'Per-row class name override',
+      },
     ],
   },
   {
-    id: 'navigation-island',
+    id: 'island',
     title: 'Island',
     codeExample: `import { Island } from '@dendelion/paper-ui';
 
@@ -560,6 +638,51 @@ const sectionDetails: SectionDetail[] = [
         type: 'ReactNode',
         required: true,
         description: 'Content to render inside the island',
+      },
+      {
+        name: 'surface',
+        type: "'paper' | 'chalkboard'",
+        default: "'paper'",
+        description: 'Visual style variant',
+      },
+    ],
+  },
+  {
+    id: 'navigation-island',
+    title: 'NavigationIsland',
+    codeExample: `import { NavigationIsland } from '@dendelion/paper-ui';
+
+<NavigationIsland
+  items={[
+    { id: 'dash', label: 'Dashboard', icon: <HomeIcon /> },
+    { id: 'plans', label: 'Plans', icon: <FolderIcon /> },
+  ]}
+  activeId={activeId}
+  onSelect={setActiveId}
+  position="bottom"
+/>`,
+    props: [
+      {
+        name: 'items',
+        type: 'NavigationIslandItem[]',
+        required: true,
+        description: 'Nav entries ({ id, label, icon? })',
+      },
+      {
+        name: 'activeId',
+        type: 'string',
+        description: 'Currently active item id',
+      },
+      {
+        name: 'onSelect',
+        type: '(id: string) => void',
+        description: 'Called when an item is clicked',
+      },
+      {
+        name: 'position',
+        type: "'top' | 'bottom'",
+        default: "'bottom'",
+        description: 'Fixed edge of the viewport to anchor to',
       },
       {
         name: 'surface',
@@ -737,6 +860,12 @@ function SaveButton() {
         default: '0.5',
         description: 'Blob shape wobble intensity',
       },
+      {
+        name: 'surface',
+        type: "'paper' | 'chalkboard'",
+        default: "'paper'",
+        description: 'Surface style',
+      },
     ],
   },
   {
@@ -813,6 +942,12 @@ function SaveButton() {
         default: '6',
         description: 'Track height in pixels',
       },
+      {
+        name: 'surface',
+        type: "'paper' | 'chalkboard'",
+        default: "'paper'",
+        description: 'Surface style',
+      },
     ],
   },
   {
@@ -825,9 +960,6 @@ function SaveButton() {
   onClose={() => setIsOpen(false)}
   title="Confirm"
   size="medium"
-  tornEdge
-  accent
-  accentColor="amber"
 >
   <p>Are you sure you want to proceed?</p>
 </Modal>`,
@@ -850,33 +982,22 @@ function SaveButton() {
         description: 'Modal heading',
       },
       {
+        name: 'children',
+        type: 'ReactNode',
+        required: true,
+        description: 'Modal body content',
+      },
+      {
         name: 'size',
         type: "'small' | 'medium' | 'large'",
         default: "'medium'",
         description: 'Modal width',
       },
       {
-        name: 'tornEdge',
-        type: 'boolean',
-        default: 'false',
-        description: 'Ripped-paper bottom edge',
-      },
-      {
-        name: 'accent',
-        type: 'boolean',
-        default: 'false',
-        description: 'Show watercolor accent blob',
-      },
-      {
-        name: 'accentColor',
-        type: "'blue' | 'green' | 'amber' | 'rose' | 'slate'",
-        default: "'blue'",
-        description: 'Accent blob color',
-      },
-      {
-        name: 'texture',
-        type: 'TextureConfig',
-        description: 'Modal background texture',
+        name: 'surface',
+        type: "'paper' | 'chalkboard'",
+        default: "'paper'",
+        description: 'Surface style',
       },
       {
         name: 'texture',
@@ -982,6 +1103,12 @@ function SaveButton() {
         default: "'Loading'",
         description: 'Accessible status label',
       },
+      {
+        name: 'surface',
+        type: "'paper' | 'chalkboard'",
+        default: "'paper'",
+        description: 'Surface style',
+      },
     ],
   },
   {
@@ -1008,6 +1135,12 @@ function SaveButton() {
         name: 'height',
         type: 'number | string',
         description: 'Explicit height',
+      },
+      {
+        name: 'surface',
+        type: "'paper' | 'chalkboard'",
+        default: "'paper'",
+        description: 'Surface style',
       },
     ],
   },
@@ -1109,6 +1242,46 @@ function SaveButton() {
         name: 'label',
         type: 'ReactNode',
         description: 'Optional centered label (horizontal only)',
+      },
+      {
+        name: 'surface',
+        type: "'paper' | 'chalkboard'",
+        default: "'paper'",
+        description: 'Surface style',
+      },
+    ],
+  },
+  {
+    id: 'accordion',
+    title: 'Accordion',
+    codeExample: `import { Accordion } from '@dendelion/paper-ui';
+
+<Accordion title="Shipping details" expanded={isOpen} onToggle={() => setIsOpen(!isOpen)}>
+  <p>Ships within 2-3 business days.</p>
+</Accordion>`,
+    props: [
+      {
+        name: 'title',
+        type: 'ReactNode',
+        required: true,
+        description: 'Header content, always visible',
+      },
+      {
+        name: 'children',
+        type: 'ReactNode',
+        required: true,
+        description: 'Collapsible body content',
+      },
+      {
+        name: 'expanded',
+        type: 'boolean',
+        default: 'false',
+        description: 'Whether the body is shown',
+      },
+      {
+        name: 'onToggle',
+        type: '() => void',
+        description: 'Called when the header is clicked',
       },
       {
         name: 'surface',
@@ -1301,6 +1474,8 @@ export const ComponentsPage: FC<{
   const [chalkboardTheme, setChalkboardTheme] = useState(false);
   const [radioValue, setRadioValue] = useState('paper');
   const [switchOn, setSwitchOn] = useState(true);
+  const [navIslandActive, setNavIslandActive] = useState('dash');
+  const [accordionOpen, setAccordionOpen] = useState(true);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -1604,12 +1779,14 @@ export const ComponentsPage: FC<{
             title="ListItem"
             description="Versatile row component with rectangular blob background, active state, icon, and action slots. Use it for navigation, lists, or any clickable row."
             category="basic"
+            chalkboard={chalkboardTheme}
             onViewDetails={() => handleViewDetails('list-item')}
           >
             <div className="w-full max-w-sm space-y-1">
               <ListItem
                 active={listItemActive === 'plans'}
                 onClick={() => setListItemActive('plans')}
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
                 icon={
                   <svg
                     width="16"
@@ -1633,6 +1810,7 @@ export const ComponentsPage: FC<{
               <ListItem
                 active={listItemActive === 'focus'}
                 onClick={() => setListItemActive('focus')}
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
                 icon={
                   <svg
                     width="16"
@@ -1655,6 +1833,7 @@ export const ComponentsPage: FC<{
                 active={listItemActive === 'settings'}
                 onClick={() => setListItemActive('settings')}
                 size="small"
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
                 icon={
                   <svg
                     width="14"
@@ -1678,7 +1857,7 @@ export const ComponentsPage: FC<{
               >
                 Settings
               </ListItem>
-              <ListItem>
+              <ListItem surface={chalkboardTheme ? 'chalkboard' : 'paper'}>
                 <span className="flex-1">Non-interactive item</span>
               </ListItem>
             </div>
@@ -2119,6 +2298,26 @@ export const ComponentsPage: FC<{
           </ComponentSection>
 
           <ComponentSection
+            id="accordion"
+            title="Accordion"
+            description="Collapsible content section with a rotating disclosure triangle."
+            category="layout"
+            chalkboard={chalkboardTheme}
+            onViewDetails={() => handleViewDetails('accordion')}
+          >
+            <div className="w-full max-w-md">
+              <Accordion
+                title="Shipping details"
+                expanded={accordionOpen}
+                onToggle={() => setAccordionOpen(!accordionOpen)}
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
+              >
+                <p>Ships within 2-3 business days. Free returns within 30 days.</p>
+              </Accordion>
+            </div>
+          </ComponentSection>
+
+          <ComponentSection
             id="table"
             title="Table"
             description="Paper-styled data table with three surface variants: grid cells with highlighted borders, ruled notebook lines, or plain minimal rows. Includes a textured toolbar with search and action slots."
@@ -2243,12 +2442,12 @@ export const ComponentsPage: FC<{
           </ComponentSection>
 
           <ComponentSection
-            id="navigation-island"
+            id="island"
             title="Island"
             description="Fixed container at the bottom of the page with paper texture background. Use it to hold controls that should always be visible."
             category="navigation"
             chalkboard={chalkboardTheme}
-            onViewDetails={() => handleViewDetails('navigation-island')}
+            onViewDetails={() => handleViewDetails('island')}
           >
             <div className="text-center">
               <p
@@ -2270,6 +2469,31 @@ export const ComponentsPage: FC<{
               >
                 Scroll down to see it with the Wobble and Theme controls.
               </p>
+            </div>
+          </ComponentSection>
+
+          <ComponentSection
+            id="navigation-island"
+            title="NavigationIsland"
+            description="Pill-style navigation bar with active-item highlighting. Typically passed to Layout's navigationIsland prop. Uses fixed positioning, so this preview is bounded to the box below via a CSS transform containing block."
+            category="navigation"
+            chalkboard={chalkboardTheme}
+            onViewDetails={() => handleViewDetails('navigation-island')}
+          >
+            <div
+              className="relative w-full flex items-end justify-center overflow-hidden"
+              style={{ height: 100, transform: 'translateZ(0)' }}
+            >
+              <NavigationIsland
+                items={[
+                  { id: 'dash', label: 'Dashboard', icon: <HeartIcon /> },
+                  { id: 'plans', label: 'Plans', icon: <FilterIcon /> },
+                  { id: 'settings', label: 'Settings', icon: <DownloadIcon /> },
+                ]}
+                activeId={navIslandActive}
+                onSelect={setNavIslandActive}
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
+              />
             </div>
           </ComponentSection>
 
@@ -2415,38 +2639,62 @@ export const ComponentsPage: FC<{
             title="Progress"
             description="Minimal progress bar with configurable color and height."
             category="feedback"
+            chalkboard={chalkboardTheme}
             onViewDetails={() => handleViewDetails('progress')}
           >
             <div className="w-full max-w-sm space-y-5">
               <div className="space-y-2">
                 <div
                   className="flex justify-between text-sm"
-                  style={{ fontFamily: "'Luminari', serif", color: '#68635C' }}
+                  style={{
+                    fontFamily: "'Luminari', serif",
+                    color: chalkboardTheme ? '#a8c4a0' : colorInkSecondary,
+                  }}
                 >
                   <span>Progress</span>
                   <span>65%</span>
                 </div>
-                <Progress value={65} color={undefined} height={6} />
+                <Progress
+                  value={65}
+                  height={6}
+                  surface={chalkboardTheme ? 'chalkboard' : 'paper'}
+                />
               </div>
               <div className="space-y-2">
                 <div
                   className="flex justify-between text-sm"
-                  style={{ fontFamily: "'Luminari', serif", color: '#68635C' }}
+                  style={{
+                    fontFamily: "'Luminari', serif",
+                    color: chalkboardTheme ? '#a8c4a0' : colorInkSecondary,
+                  }}
                 >
                   <span>Custom color</span>
                   <span>42%</span>
                 </div>
-                <Progress value={42} color="#D4A373" height={8} />
+                <Progress
+                  value={42}
+                  color="#D4A373"
+                  height={8}
+                  surface={chalkboardTheme ? 'chalkboard' : 'paper'}
+                />
               </div>
               <div className="space-y-2">
                 <div
                   className="flex justify-between text-sm"
-                  style={{ fontFamily: "'Luminari', serif", color: '#68635C' }}
+                  style={{
+                    fontFamily: "'Luminari', serif",
+                    color: chalkboardTheme ? '#a8c4a0' : colorInkSecondary,
+                  }}
                 >
                   <span>Small</span>
                   <span>80%</span>
                 </div>
-                <Progress value={80} color="#C98B8B" height={4} />
+                <Progress
+                  value={80}
+                  color="#C98B8B"
+                  height={4}
+                  surface={chalkboardTheme ? 'chalkboard' : 'paper'}
+                />
               </div>
             </div>
           </ComponentSection>
@@ -2460,9 +2708,9 @@ export const ComponentsPage: FC<{
             onViewDetails={() => handleViewDetails('spinner')}
           >
             <div className="flex items-center gap-8">
-              <Spinner size="small" color={chalkboardTheme ? '#d4e8cb' : undefined} />
-              <Spinner size="medium" color={chalkboardTheme ? '#d4e8cb' : undefined} />
-              <Spinner size="large" color={chalkboardTheme ? '#d4e8cb' : undefined} />
+              <Spinner size="small" surface={chalkboardTheme ? 'chalkboard' : 'paper'} />
+              <Spinner size="medium" surface={chalkboardTheme ? 'chalkboard' : 'paper'} />
+              <Spinner size="large" surface={chalkboardTheme ? 'chalkboard' : 'paper'} />
             </div>
           </ComponentSection>
 
@@ -2475,11 +2723,24 @@ export const ComponentsPage: FC<{
             onViewDetails={() => handleViewDetails('skeleton')}
           >
             <div className="flex items-center gap-5 w-full max-w-md">
-              <Skeleton variant="circle" width={48} height={48} />
+              <Skeleton
+                variant="circle"
+                width={48}
+                height={48}
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
+              />
               <div className="flex-1 space-y-2">
-                <Skeleton variant="text" width="60%" />
-                <Skeleton variant="text" />
-                <Skeleton variant="text" width="80%" />
+                <Skeleton
+                  variant="text"
+                  width="60%"
+                  surface={chalkboardTheme ? 'chalkboard' : 'paper'}
+                />
+                <Skeleton variant="text" surface={chalkboardTheme ? 'chalkboard' : 'paper'} />
+                <Skeleton
+                  variant="text"
+                  width="80%"
+                  surface={chalkboardTheme ? 'chalkboard' : 'paper'}
+                />
               </div>
             </div>
           </ComponentSection>

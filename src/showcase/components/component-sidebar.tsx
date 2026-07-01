@@ -47,13 +47,15 @@ const componentGroups: ComponentGroup[] = [
       { id: 'layout', title: 'Layout' },
       { id: 'card', title: 'Card' },
       { id: 'divider', title: 'Divider' },
+      { id: 'accordion', title: 'Accordion' },
       { id: 'table', title: 'Table' },
     ],
   },
   {
     category: 'Navigation',
     items: [
-      { id: 'navigation-island', title: 'Island' },
+      { id: 'island', title: 'Island' },
+      { id: 'navigation-island', title: 'NavigationIsland' },
       { id: 'tabs', title: 'Tabs' },
       { id: 'breadcrumb', title: 'Breadcrumb' },
       { id: 'pagination', title: 'Pagination' },

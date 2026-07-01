@@ -16,9 +16,9 @@
 ## Features
 
 - **Natural Materials** — Textured paper backgrounds, ink borders, canvas weaves, watercolor washes
-- **24 Components** — Layout primitives, form controls, data display, and feedback (see [Components](#components))
+- **37 Components** — Layout primitives, form controls, data display, navigation, feedback, and overlays (see [Components](#components))
 - **Tailwind CSS Preset** — `paperPreset` with warm color tokens (paper, ink, canvas, watercolor)
-- **6 Paper Textures** — SVG-generated grain: paper, parchment, kraft, marble, speckle, canvas
+- **7 Paper Textures** — SVG-generated grain: white, paper, speckle, parchment, canvas, kraft, chalkboard
 - **Ruled Overlays** — Notebook lines and grid patterns in blue, brown, or black
 - **TypeScript** — Full type support with strict checking
 - **SCSS Modules** — Scoped component styles with shared mixins and tokens
@@ -56,7 +56,7 @@ export default {
 
 ```ts
 // In your app entry (e.g., main.tsx)
-import '@dendelion/paper-ui';
+import '@dendelion/paper-ui/dist/index.css';
 ```
 
 This imports the bundled CSS including fonts, base styles, and Tailwind directives.
@@ -90,15 +90,19 @@ function App() {
 
 ## Components
 
-The library exports 24 components. The core layout and form primitives are documented below; the full set is:
+The library exports 37 components. The core layout and form primitives are documented below; the full set is:
 
 | Category | Components |
 |----------|-----------|
-| **Layout** | `Layout`, `Page`, `Island`, `NavigationIsland`, `Card` |
-| **Forms** | `Button`, `IconButton`, `Checkbox`, `Input`, `Textarea`, `Select`, `Tabs` |
-| **Data display** | `Table`, `ListItem`, `Accordion`, `PropTable`, `Swatch`, `Stamp`, `Icon` |
-| **Feedback** | `Alert`, `Modal`, `Progress` |
+| **Layout** | `Layout`, `Page`, `Card`, `Divider`, `Accordion` |
+| **Navigation** | `Island`, `NavigationIsland`, `Tabs`, `Breadcrumb`, `Pagination` |
+| **Forms** | `Button`, `IconButton`, `Checkbox`, `Radio`, `RadioGroup`, `Switch`, `Input`, `Select`, `Textarea` |
+| **Data display** | `Table`, `ListItem`, `Stamp`, `Badge`, `Avatar`, `PropTable`, `Swatch`, `Icon` |
+| **Feedback** | `Alert`, `ToastProvider`, `Progress`, `Spinner`, `Skeleton` |
+| **Overlay** | `Modal`, `Tooltip`, `Menu` |
 | **Code** | `CodeBlock`, `CopyButton` |
+
+All components are documented with live demos and prop tables in the built-in showcase (`pnpm run dev`).
 
 All components are named exports with a matching `{Component}Props` type.
 
@@ -184,9 +188,11 @@ Floating pill-style navigation bar with paper texture background.
 ```tsx
 <NavigationIsland
   items={[
-    { id: 'dash', label: 'Dashboard', path: '/', icon: <HomeIcon /> },
-    { id: 'plans', label: 'Plans', path: '/plans', icon: <FolderIcon /> },
+    { id: 'dash', label: 'Dashboard', icon: <HomeIcon /> },
+    { id: 'plans', label: 'Plans', icon: <FolderIcon /> },
   ]}
+  activeId={activeId}
+  onSelect={setActiveId}
 />
 ```
 
@@ -215,11 +221,11 @@ Floating pill-style navigation bar with paper texture background.
 Available as Tailwind utilities:
 
 - `bg-paper-texture` — Subtle grain noise
+- `bg-speckle-texture` — Coarse speckled noise
 - `bg-parchment-texture` — Warm aged paper
+- `bg-canvas-weave` — Desaturated woven grain
 - `bg-kraft-texture` — Brown craft paper
 - `bg-marble-texture` — Cool stone grain
-- `bg-speckle-texture` — Fine speckled noise
-- `bg-canvas-texture` — Crosshatch weave
 
 ## Development
 
