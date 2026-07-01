@@ -38,21 +38,19 @@ Repo infra (org transfer, release-please, commitlint, Vercel deploy of the showc
 
 ### Component gap-filling, round 2
 - `5cd11cc` — Avatar (circular/organic-square identity marker, initials fallback with a deterministic watercolor tint), Breadcrumb (ink-link trail with chevron separators), Pagination (prev/next IconButtons + sibling-aware page range with ellipsis, built on Button ghost/isActive like Tabs). Verified visually in both paper and chalkboard themes via the dev showcase.
+- `0adfca2` — Menu: anchored action menu (portal-positioned like Tooltip/Select), real roving DOM focus across items, danger tone, disabled items, separators, start/end alignment. This closes the full gap list below.
 
 ---
 
 ## Current Inventory
 
-`src/components/`: accordion, alert, badge, button, card, checkbox, code-block, copy-button, divider, icon, icon-button, input, island, layout, list-item, modal, navigation-island, page, progress, prop-table, radio, select, skeleton, spinner, stamp, swatch, table, tabs, textarea, toast, tooltip.
+`src/components/`: accordion, alert, avatar, badge, breadcrumb, button, card, checkbox, code-block, copy-button, divider, icon, icon-button, input, island, layout, list-item, menu, modal, navigation-island, page, pagination, progress, prop-table, radio, select, skeleton, spinner, stamp, swatch, table, tabs, textarea, toast, tooltip.
 
 ---
 
 ## Known Gaps
 
-- ~~Breadcrumb~~ — done (`5cd11cc`)
-- ~~Pagination~~ — done (`5cd11cc`)
-- ~~Avatar~~ — done (`5cd11cc`)
-- **Menu / Dropdown** — generic anchored menu (Select already exists but is form-specific; this would be the general-purpose version, e.g. for context menus or the NavigationIsland). Not started — needs the same portal-positioning pattern as Tooltip/Select, more involved than the other three.
+All four gap components identified this phase are done: ~~Breadcrumb~~, ~~Pagination~~, ~~Avatar~~ (`5cd11cc`), ~~Menu/Dropdown~~ (`0adfca2`).
 
 **Deferred, build only when a concrete need shows up** (explicit user decision):
 - **Tag** — discussed against Badge/Stamp; decided the existing two cover current needs, don't add a third without a real use case
@@ -61,9 +59,11 @@ Repo infra (org transfer, release-please, commitlint, Vercel deploy of the showc
 
 ## Next Steps
 
-1. **Menu / Dropdown** — the one remaining component gap; needs portal positioning (same pattern as Tooltip/Select)
-2. Continue any further visual-quality passes the user flags while reviewing the showcase (texture/color consistency has been an iterative back-and-forth this phase — expect more of this)
-3. Dark mode (`011-PAPER_UI_DARK_MODE_PLAN.md`, listed as upcoming in [plans.md](./plans.md) but never started) is still open once component coverage feels sufficient
+No component gaps remain from this phase's analysis. Candidates going forward:
+
+1. Continue any further visual-quality passes the user flags while reviewing the showcase (texture/color consistency has been an iterative back-and-forth this phase — expect more of this)
+2. Dark mode (`011-PAPER_UI_DARK_MODE_PLAN.md`, listed as upcoming in [plans.md](./plans.md) but never started) is still open once component coverage feels sufficient
+3. Re-survey for any newly-noticed component gaps now that the known list is cleared
 
 **Workflow note:** as of 2026-07-01 the user commits work themselves review-side — I commit locally but do not `git push`; they push manually.
 
