@@ -12,8 +12,11 @@ export interface ProgressProps {
   className?: string;
 }
 
+// Width stays an abstract, resolution-independent unit (real width is
+// fluid/unknown in JS), but height is drawn at the real pixel value —
+// stretching a fixed-height viewBox non-uniformly to fit a much shorter
+// bar squashes the vertical jitter until the sketchy edges disappear.
 const VIEW_W = 300;
-const VIEW_H = 20;
 const MARGIN = 1;
 
 export function Progress({
@@ -34,16 +37,16 @@ export function Progress({
   const trackPaths = useMemo(
     () =>
       roughGenerator.toPaths(
-        roughGenerator.rectangle(MARGIN, MARGIN, VIEW_W - MARGIN * 2, VIEW_H - MARGIN * 2, {
+        roughGenerator.rectangle(MARGIN, MARGIN, VIEW_W - MARGIN * 2, height - MARGIN * 2, {
           seed,
-          roughness: 1.6,
+          roughness: 2.2,
           fill: trackColor,
           fillStyle: 'solid',
           stroke: trackColor,
           strokeWidth: 1.5,
         }),
       ),
-    [seed, trackColor],
+    [seed, trackColor, height],
   );
 
   const fillWidth = Math.max((pct / 100) * (VIEW_W - MARGIN * 2), 0);
@@ -51,9 +54,9 @@ export function Progress({
     () =>
       fillWidth > 0
         ? roughGenerator.toPaths(
-            roughGenerator.rectangle(MARGIN, MARGIN, fillWidth, VIEW_H - MARGIN * 2, {
+            roughGenerator.rectangle(MARGIN, MARGIN, fillWidth, height - MARGIN * 2, {
               seed: seed + 1,
-              roughness: 1.4,
+              roughness: 2,
               fill: fillColor,
               fillStyle: 'solid',
               stroke: fillColor,
@@ -61,14 +64,14 @@ export function Progress({
             }),
           )
         : [],
-    [seed, fillColor, fillWidth],
+    [seed, fillColor, fillWidth, height],
   );
 
   return (
     <div className={cn(styles.track, className)} style={{ height, borderRadius: height / 2 }}>
       <svg
         className={styles.svg}
-        viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
+        viewBox={`0 0 ${VIEW_W} ${height}`}
         preserveAspectRatio="none"
         aria-hidden="true"
       >
