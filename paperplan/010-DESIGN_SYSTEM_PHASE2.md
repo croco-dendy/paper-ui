@@ -40,6 +40,10 @@ Repo infra (org transfer, release-please, commitlint, Vercel deploy of the showc
 - `5cd11cc` — Avatar (circular/organic-square identity marker, initials fallback with a deterministic watercolor tint), Breadcrumb (ink-link trail with chevron separators), Pagination (prev/next IconButtons + sibling-aware page range with ellipsis, built on Button ghost/isActive like Tabs). Verified visually in both paper and chalkboard themes via the dev showcase.
 - `0adfca2` — Menu: anchored action menu (portal-positioned like Tooltip/Select), real roving DOM focus across items, danger tone, disabled items, separators, start/end alignment. This closes the full gap list below.
 
+### Full design-system QA pass
+- `f30d581` — added `surface` to Accordion, ListItem, Progress, Skeleton, Spinner (the last five visual components missing it — their showcase demos either silently didn't flip to chalkboard, or worked around it with manual per-theme color overrides); fixed a real bug in NavigationIsland where `position="top"` silently fell through to `position: relative` instead of actually fixing to the top (the CSS existed, the branch logic didn't check for it)
+- `1a5b667` — fixed docs that had drifted from reality: README's Quick Start told consumers to bare-import the package for CSS, which never actually worked (verified against `vite.config.ts` — CSS is a fully separate build asset); README's component table/count were stale (24 vs. actual 37); README claimed `bg-canvas-texture`/`bg-speckle-texture` Tailwind classes that didn't exist (real name is `canvas-weave`, speckle had no class at all — added it); Modal's showcase prop table referenced `tornEdge`/`accent`/`accentColor` which don't exist on the component anymore; Select's docs were missing several real props and its code example would crash at runtime (`onChange` receives a plain string, not an event); added a full showcase section for Accordion (shipped, zero docs); fixed the sidebar's "Island" entry which was actually documenting the *other* `Island` component, and added the real `NavigationIsland` a section of its own
+
 ---
 
 ## Current Inventory
@@ -59,11 +63,12 @@ All four gap components identified this phase are done: ~~Breadcrumb~~, ~~Pagina
 
 ## Next Steps
 
-No component gaps remain from this phase's analysis. Candidates going forward:
+No component gaps remain from this phase's analysis, and a full QA pass (consistency, docs, package/consumption readiness) has been completed. Candidates going forward:
 
 1. Continue any further visual-quality passes the user flags while reviewing the showcase (texture/color consistency has been an iterative back-and-forth this phase — expect more of this)
 2. Dark mode (`011-PAPER_UI_DARK_MODE_PLAN.md`, listed as upcoming in [plans.md](./plans.md) but never started) is still open once component coverage feels sufficient
 3. Re-survey for any newly-noticed component gaps now that the known list is cleared
+4. Table's `board`/`expandable` modes are now documented but still have no live demo in the showcase — worth adding if there's a concrete need
 
 **Workflow note:** as of 2026-07-01 the user commits work themselves review-side — I commit locally but do not `git push`; they push manually.
 
