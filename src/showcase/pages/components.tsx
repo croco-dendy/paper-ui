@@ -2283,7 +2283,7 @@ export const ComponentsPage: FC<{
             <div className="flex flex-col gap-6 w-full max-w-md">
               <Divider surface={chalkboardTheme ? 'chalkboard' : 'paper'} />
               <Divider label="or" surface={chalkboardTheme ? 'chalkboard' : 'paper'} />
-              <div className="flex items-center gap-4 h-8">
+              <div className="flex items-center justify-center gap-4 h-8">
                 <span style={{ color: chalkboardTheme ? '#a8c4a0' : colorInkSecondary }}>Left</span>
                 <Divider
                   orientation="vertical"
