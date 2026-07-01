@@ -60,6 +60,7 @@ const componentGroups: ComponentGroup[] = [
     category: 'Feedback',
     items: [
       { id: 'alert', title: 'Alert' },
+      { id: 'toast', title: 'Toast' },
       { id: 'progress', title: 'Progress' },
       { id: 'spinner', title: 'Spinner' },
       { id: 'skeleton', title: 'Skeleton' },

@@ -27,6 +27,7 @@ import { Textarea } from '../../components/textarea';
 import { Tooltip } from '../../components/tooltip';
 import { ComponentSection } from '../components/component-section';
 import { ComponentSidebar, componentIds } from '../components/component-sidebar';
+import { ToastDemo } from '../components/toast-demo';
 import {
   colorInkPrimary,
   colorInkSecondary,
@@ -641,6 +642,54 @@ const sectionDetails: SectionDetail[] = [
         name: 'onDismiss',
         type: '() => void',
         description: 'Dismiss handler',
+      },
+    ],
+  },
+  {
+    id: 'toast',
+    title: 'Toast',
+    codeExample: `import { ToastProvider, useToast } from '@dendelion/paper-ui';
+
+function SaveButton() {
+  const { toast } = useToast();
+  return (
+    <Button onClick={() => toast({ variant: 'success', title: 'Saved' })}>
+      Save
+    </Button>
+  );
+}
+
+<ToastProvider position="bottom-right">
+  <SaveButton />
+</ToastProvider>`,
+    props: [
+      {
+        name: 'position',
+        type: "'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right'",
+        default: "'bottom-right'",
+        description: 'Corner/edge the stack renders from (ToastProvider)',
+      },
+      {
+        name: 'defaultDuration',
+        type: 'number',
+        default: '5000',
+        description: 'Auto-dismiss delay in ms; a toast can override it (ToastProvider)',
+      },
+      {
+        name: 'surface',
+        type: "'paper' | 'chalkboard'",
+        default: "'paper'",
+        description: 'Surface style for all toasts (ToastProvider)',
+      },
+      {
+        name: 'toast(options)',
+        type: '(options: ToastOptions) => string',
+        description: 'From useToast() — shows a toast, returns its id',
+      },
+      {
+        name: 'dismiss(id)',
+        type: '(id: string) => void',
+        description: 'From useToast() — closes a toast early',
       },
     ],
   },
@@ -2123,6 +2172,17 @@ export const ComponentsPage: FC<{
                 </>
               )}
             </div>
+          </ComponentSection>
+
+          <ComponentSection
+            id="toast"
+            title="Toast"
+            description="Positioned, stacked notifications with auto-dismiss (pauses on hover) and manual close. Built on Alert."
+            category="feedback"
+            chalkboard={chalkboardTheme}
+            onViewDetails={() => handleViewDetails('toast')}
+          >
+            <ToastDemo surface={chalkboardTheme ? 'chalkboard' : 'paper'} />
           </ComponentSection>
 
           <ComponentSection
