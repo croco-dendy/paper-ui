@@ -13,12 +13,13 @@
   font-family: var(--paper-font-default, $font-family-serif);
   font-size: $font-size-sm;
   line-height: $line-height-snug;
-  color: $color-bg-base;
-  background-color: $color-code-bg;
-  background-image: url($paper-texture-data-uri);
+  color: $color-text-primary;
+  background-color: $color-canvas-300;
+  background-image: url($kraft-texture-data-uri);
   background-repeat: repeat;
   background-size: 200px 200px;
-  @include organic-radius($radius-sm, 1.5px);
+  border: 1px solid $color-border-medium;
+  @include organic-radius($radius-sm, 2.5px);
   box-shadow: $shadow-paper-md;
   pointer-events: none;
   animation: tooltipIn 120ms ease-out;
@@ -29,8 +30,9 @@
     position: absolute;
     width: 9px;
     height: 9px;
-    background-color: $color-code-bg;
+    background-color: $color-canvas-300;
     transform: rotate(45deg);
+    z-index: -1;
   }
 }
 

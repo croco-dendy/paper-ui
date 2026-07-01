@@ -45,6 +45,7 @@ export default defineConfig(({ command }) => {
           'clsx',
           'tailwind-merge',
           'framer-motion',
+          'roughjs',
         ],
         output: {
           // The library is almost entirely interactive (hooks, state, event

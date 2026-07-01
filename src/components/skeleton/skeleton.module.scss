@@ -1,36 +1,28 @@
-@use '../../styles/tokens' as *;
-
 .skeleton {
   display: block;
-  background-color: rgba($color-text-primary, 0.08);
-  background-image: url($paper-texture-data-uri);
-  background-repeat: repeat;
-  background-size: 200px 200px;
   animation: pulse 1.4s ease-in-out infinite;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .text {
   width: 100%;
   height: 1em;
   margin: 0.15em 0;
-  border-radius: $radius-sm;
 }
 
 .rect {
   width: 100%;
   height: 100px;
-  border-radius: $radius-md;
 }
 
 .circle {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-}
-
-.chalkboard {
-  background-image: none;
-  background-color: rgba($color-chalkboard-chalk, 0.14);
 }
 
 @keyframes pulse {
