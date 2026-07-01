@@ -1925,34 +1925,34 @@ export const ComponentsPage: FC<{
             chalkboard={chalkboardTheme}
             onViewDetails={() => handleViewDetails('switch')}
           >
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3">
               <Switch
                 label="Notifications"
                 checked={switchOn}
                 surface={chalkboardTheme ? 'chalkboard' : 'paper'}
                 onChange={(e) => setSwitchOn(e.target.checked)}
               />
-              <div className="flex items-center gap-5">
-                <Switch
-                  size="small"
-                  checked={switchOn}
-                  surface={chalkboardTheme ? 'chalkboard' : 'paper'}
-                  onChange={(e) => setSwitchOn(e.target.checked)}
-                />
-                <Switch
-                  size="large"
-                  checked={switchOn}
-                  surface={chalkboardTheme ? 'chalkboard' : 'paper'}
-                  onChange={(e) => setSwitchOn(e.target.checked)}
-                />
-                <Switch
-                  label="Disabled"
-                  disabled
-                  checked={false}
-                  surface={chalkboardTheme ? 'chalkboard' : 'paper'}
-                  onChange={() => {}}
-                />
-              </div>
+              <Switch
+                label="Small size"
+                size="small"
+                checked={switchOn}
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
+                onChange={(e) => setSwitchOn(e.target.checked)}
+              />
+              <Switch
+                label="Large size"
+                size="large"
+                checked={switchOn}
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
+                onChange={(e) => setSwitchOn(e.target.checked)}
+              />
+              <Switch
+                label="Disabled"
+                disabled
+                checked={false}
+                surface={chalkboardTheme ? 'chalkboard' : 'paper'}
+                onChange={() => {}}
+              />
             </div>
           </ComponentSection>
 
